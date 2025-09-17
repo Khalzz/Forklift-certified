@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8jh63vm3tr0h"]
+
+[ext_resource type="Texture2D" uid="uid://b24wme1o6ibod" path="res://Assets/Materials/purple.png" id="1_awekr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06fis"]
+albedo_texture = ExtResource("1_awekr")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_awekr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_awekr"]
+friction = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_awekr"]
+
+[node name="box" type="Node3D"]
+
+[node name="BaseBox" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_06fis")
+mesh = SubResource("BoxMesh_awekr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BaseBox"]
+physics_material_override = SubResource("PhysicsMaterial_awekr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseBox/StaticBody3D"]
+shape = SubResource("BoxShape3D_awekr")

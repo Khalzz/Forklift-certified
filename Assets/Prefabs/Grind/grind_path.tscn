@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://3n18bokpi40a"]
+
+[ext_resource type="Script" uid="uid://bkjq5d3vleaf4" path="res://Assets/Scripts/SkateLogic/grind.gd" id="1_14e80"]
+[ext_resource type="Script" uid="uid://cimwuyi1g2ovh" path="res://Assets/Scripts/SkateLogic/grind_path_follower.gd" id="1_gbwkr"]
+
+[node name="GrindToFollow" type="Path3D"]
+script = ExtResource("1_14e80")
+
+[node name="PathFollower" type="PathFollow3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0)
+cubic_interp = false
+loop = false
+script = ExtResource("1_gbwkr")

@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyctv4o556y1e"]
+
+[ext_resource type="Script" uid="uid://cf61wgupyo1jn" path="res://Assets/Scripts/player.gd" id="1_gxb1y"]
+[ext_resource type="PackedScene" uid="uid://rnlbjyt78edc" path="res://Assets/Models/forklift.glb" id="1_ko2s7"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gxb1y"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0dy5s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f2nln"]
+size = Vector3(1, 0.0229492, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ko2s7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_efk68"]
+size = Vector3(0.217926, 0.284363, 0.4823)
+
+[node name="World" type="Node3D"]
+
+[node name="Floor" type="Node3D" parent="."]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_gxb1y")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor/FloorMesh"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_0dy5s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/FloorMesh/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0127389, 0)
+shape = SubResource("BoxShape3D_f2nln")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.712198, -0.152127, -0.685297, 0.701979, 0.154342, 0.695273, 0, -0.976236, 0.216712, -6.12498, 12.2507, 1.86461)
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("1_gxb1y")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.945143, 0.0547515, -0.322036, 0.063448, 0.936308, 0.345402, 0.320436, -0.346887, 0.881471, -0.23402, 0.467797, 0.624469)
+fov = 38.8822
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.049566, 0.335834, -0.000917494)
+physics_material_override = SubResource("PhysicsMaterial_ko2s7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00645447, -0.0317685, 0.0701294)
+shape = SubResource("BoxShape3D_efk68")
+
+[node name="forklift" parent="Player/RigidBody3D" instance=ExtResource("1_ko2s7")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

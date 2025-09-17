@@ -1,0 +1,141 @@
+[gd_scene load_steps=15 format=3 uid="uid://cyctv4o556y1e"]
+
+[ext_resource type="Texture2D" uid="uid://bemvhniy4n5e6" path="res://Assets/Materials/orange.png" id="1_f2nln"]
+[ext_resource type="PackedScene" uid="uid://b8wm5aids0hsd" path="res://Assets/Prefabs/Player/player.tscn" id="5_efk68"]
+[ext_resource type="PackedScene" uid="uid://j8r2xo6jof" path="res://Assets/Prefabs/blocks/grindable.tscn" id="15_c5xim"]
+[ext_resource type="PackedScene" uid="uid://b8jh63vm3tr0h" path="res://Assets/Prefabs/blocks/box.tscn" id="16_b07cf"]
+[ext_resource type="PackedScene" uid="uid://3n18bokpi40a" path="res://Assets/Prefabs/Grind/grind_path.tscn" id="16_x8mav"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f2nln"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_efk68"]
+sky_material = SubResource("ProceduralSkyMaterial_f2nln")
+
+[sub_resource type="Environment" id="Environment_06fis"]
+background_mode = 1
+background_color = Color(0.509306, 0.667922, 1, 1)
+sky = SubResource("Sky_efk68")
+tonemap_mode = 2
+fog_light_energy = 13.46
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efk68"]
+albedo_texture = ExtResource("1_f2nln")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gxb1y"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0dy5s"]
+friction = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f2nln"]
+size = Vector3(1, 0.0229492, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_65pw5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0.5),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_x8mav"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.5, 0, -0.5, 0, 0, 0, 0, 0, 0, 0.5, 0, -0.5, 0, 0, 0, 0, 0, 0, 0.5, 0, 0.5, 0, 0, 0, 0, 0, 0, -0.5, 0, 0.5, 0, 0, 0, 0, 0, 0, -0.5, 0, -0.5),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="World" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("5_efk68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.69582, 0.312811, 5.8868)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_06fis")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0977219, 0.995214, 0, -0.995214, 0.0977219, 0, 20.9353, 0)
+light_volumetric_fog_energy = 0.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_blur = 1.312
+directional_shadow_max_distance = 91.3
+
+[node name="Floor" type="Node3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_efk68")
+mesh = SubResource("PlaneMesh_gxb1y")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor/FloorMesh"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_0dy5s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/FloorMesh/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0127389, 0)
+shape = SubResource("BoxShape3D_f2nln")
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="Grindable" parent="Boxes" instance=ExtResource("15_c5xim")]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 3.22108, 0, 2.99637)
+
+[node name="GrindPath" parent="Boxes/Grindable" instance=ExtResource("16_x8mav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)
+curve = SubResource("Curve3D_65pw5")
+tag = "Grindable"
+
+[node name="Grindable2" parent="Boxes" instance=ExtResource("15_c5xim")]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.00552225, 0, 2.99637)
+
+[node name="GrindPath" parent="Boxes/Grindable2" instance=ExtResource("16_x8mav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)
+curve = SubResource("Curve3D_65pw5")
+tag = "Grindable 2"
+
+[node name="box" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, -2.68269, 0.215767, 8.45537)
+
+[node name="GrindPath" parent="Boxes/box" instance=ExtResource("16_x8mav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)
+curve = SubResource("Curve3D_x8mav")
+tag = "CAJA"
+loop = true
+
+[node name="box2" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(3, 0, 0, 0, 0.452026, 1.28227, 0, -0.21371, 2.71216, -1.41654, 0.0669129, 12.4791)
+
+[node name="box3" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(2.96373, -0.0775191, 0, 0.465113, 0.493955, 0, 0, 0, 10.6812, -1.38654, 0.807144, 19.5157)
+
+[node name="box4" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(1.77541, -0.403042, 0, 2.41825, 0.295901, 0, 0, 0, 10.6812, 0.966119, 2.27864, 19.5157)
+
+[node name="box5" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(1.57515, -0.35758, -4.92806, 2.41825, 0.295901, -2.25669e-07, 0.819132, -0.185954, 9.47641, 0.780308, 2.27864, 24.9832)
+
+[node name="box6" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(0.921378, -0.209165, -9.13023, 2.41825, 0.295901, -1.63261e-07, 1.51761, -0.344518, 5.54319, -1.82075, 2.27864, 28.3761)
+
+[node name="box7" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, -9.28363, 1.70233, 28.197)
+
+[node name="GrindPath" parent="Boxes/box7" instance=ExtResource("16_x8mav")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)
+curve = SubResource("Curve3D_x8mav")
+tag = "CAJA"
+loop = true
+
+[node name="box9" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(-0.0212578, 0.00482604, -10.6804, 2.41825, 0.295901, -3.33874e-07, 1.77528, -0.403013, -0.127886, 0.11714, 2.27864, 28.7573)
+
+[node name="box16" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(1.73018, -0.392773, -2.39566, 2.41825, 0.295901, -4.56996e-07, 0.398202, -0.0903972, 10.4091, 0.780308, 2.27864, 24.9832)
+
+[node name="box17" parent="Boxes" instance=ExtResource("16_b07cf")]
+transform = Transform3D(1.14858, -0.260742, -8.14489, 2.41825, 0.295901, -3.26522e-07, 1.35383, -0.307337, 6.91005, -1.82075, 2.27864, 28.3761)

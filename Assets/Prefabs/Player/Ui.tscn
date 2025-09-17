@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr0h0q780l4sw"]
+
+[ext_resource type="Script" uid="uid://dvoaify86kj5b" path="res://Assets/Scripts/Player/ui.gd" id="1_oyw1i"]
+
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("state_label", "can_grind_label")]
+script = ExtResource("1_oyw1i")
+state_label = NodePath("Panel/MarginContainer/DebugLabels/State")
+can_grind_label = NodePath("Panel/MarginContainer/DebugLabels/CanGrind")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -141.0
+offset_bottom = 97.0
+grow_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DebugLabels" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Framerate" type="Label" parent="Panel/MarginContainer/DebugLabels"]
+layout_mode = 2
+text = "100 fps"
+
+[node name="State" type="Label" parent="Panel/MarginContainer/DebugLabels"]
+layout_mode = 2
+text = "State: Running"
+
+[node name="CanGrind" type="Label" parent="Panel/MarginContainer/DebugLabels"]
+layout_mode = 2
+text = "Can Grind: True"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 121.0
+offset_bottom = 77.0
+scale = Vector2(1.00311, 1)
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+
+[node name="DebugLabels" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Points" type="Label" parent="MarginContainer/DebugLabels"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Score: 0"
