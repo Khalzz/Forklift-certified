@@ -61,9 +61,13 @@ func start():
 			global_path_dir.dot(player_dir)
 		)
 		
+		var bearing = fmod(rad_to_deg(angle), 360.0)
+		if bearing < 0:
+			bearing += 360.0
+		
 		print("path direction: ", global_path_dir)
 		print("Angle between player and path (radians): ", angle)
-		print("Angle in degrees: ", rad_to_deg(angle))
+		print("Angle in degrees: ", bearing)
 		
 		var direction = global_path_dir.normalized()
 		var target_position = $"../../Models".global_transform.origin + direction
