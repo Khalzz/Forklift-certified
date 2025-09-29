@@ -19,6 +19,10 @@ func start():
 func update(delta):
 	jump_timer += delta
 	
+	if not jumping:
+		jumping = true
+		can_check_ground = false
+	
 	if jump_timer > max_jump_time:
 		can_check_ground = true
 	
@@ -27,16 +31,11 @@ func update(delta):
 	if get_parent().is_touching_ground() and can_check_ground:
 		$"../..".squash(delta, 150)
 		get_parent().change_state(get_parent().States.Running)
+		
 	
 func fixed_update(delta):
 	get_parent().rigid_body.apply_force(get_parent().rigid_body.linear_velocity.normalized() * 5.0)
 	
-	if not jumping:
-		jumping = true
-		can_check_ground = false
-	
 	if jumping:
 		if !get_parent().is_touching_ground():
 			get_parent().rigid_body.rotation.y += (10.0 * get_parent().x_input) * delta
-	
-	

@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://b8wm5aids0hsd"]
+[gd_scene load_steps=28 format=3 uid="uid://b8wm5aids0hsd"]
 
 [ext_resource type="Script" uid="uid://cf61wgupyo1jn" path="res://Assets/Scripts/player.gd" id="1_a6fu1"]
+[ext_resource type="Script" uid="uid://c84ykpjmg20bk" path="res://Scenes/camera.gd" id="2_f2qr2"]
 [ext_resource type="Texture2D" uid="uid://dtcx7mqa1mrtp" path="res://Assets/Sprites/Arrow.svg" id="3_uijvq"]
 [ext_resource type="PackedScene" uid="uid://rnlbjyt78edc" path="res://Assets/Models/forklift.glb" id="4_47ure"]
 [ext_resource type="Script" uid="uid://b1eh2dah8x45" path="res://Assets/Scripts/Player/normal_detection.gd" id="5_kct70"]
@@ -16,7 +17,6 @@
 [ext_resource type="Script" uid="uid://cyvw2df3lkh7y" path="res://Assets/Scripts/Player/StateMachine/grinding.gd" id="14_5k530"]
 [ext_resource type="Script" uid="uid://cvkdjxuurbk00" path="res://Assets/Scripts/Player/StateMachine/failing.gd" id="14_47ure"]
 [ext_resource type="Script" uid="uid://cfdq5awps8m5v" path="res://Assets/Scripts/Player/trick_manager.gd" id="14_uijvq"]
-[ext_resource type="Script" uid="uid://cscc34jipl8uf" path="res://Assets/Scripts/Player/camera_manager.gd" id="18_kct70"]
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_x8mav"]
 
@@ -26,9 +26,8 @@
 radius = 0.0841897
 height = 0.275166
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_47ure"]
-radius = 0.372936
-height = 1.39311
+[sub_resource type="SphereShape3D" id="SphereShape3D_wjxug"]
+radius = 0.735003
 
 [sub_resource type="Animation" id="Animation_47ure"]
 length = 0.001
@@ -68,57 +67,9 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector3(0, 0, 0)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Models/forklift:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Models/forklift:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine:state")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("StateMachine/Failing:damping_factor")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
 
-[sub_resource type="Animation" id="Animation_g7r1l"]
-resource_name = "back_flip"
+[sub_resource type="Animation" id="Animation_uijvq"]
+resource_name = "left_flip"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -126,7 +77,7 @@ tracks/0/path = NodePath("StateMachine:danger_state")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.433333),
+"times": PackedFloat32Array(0.0666667, 0.366667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -141,7 +92,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(0.258816, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-6.28319, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 6.28319)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -165,23 +116,22 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.633333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.315, 0.09), Vector3(0, 0.395, -0.065), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0.065, 0.315, 0), Vector3(-0.065, 0.315, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_t514h"]
-resource_name = "failing"
-length = 2.0
+[sub_resource type="Animation" id="Animation_kct70"]
+resource_name = "right_flip"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Models/forklift:position")
+tracks/0/path = NodePath("StateMachine:danger_state")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.233333, 0.366667, 0.533333, 0.666667, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0.075, -0.11), Vector3(0, 0.075, -0.11), Vector3(0, 0.175, -0.11), Vector3(0, 0.175, -0.11), Vector3(0, 0.065, -0.11), Vector3(0, 0.175, -0.11), Vector3(0, 0.11, -0.11), Vector3(0, 0.115, -0.11)]
+"times": PackedFloat32Array(0.0666667, 0.366667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -190,10 +140,10 @@ tracks/1/path = NodePath("Models/forklift:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.0333333, 0.1, 0.333333, 0.5, 0.666667, 0.833333),
-"transitions": PackedFloat32Array(0.31864, 1, 1, 0.170755, 1, 1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.258816, 1),
 "update": 0,
-"values": [Vector3(0, 1.5708, 1.5708), Vector3(0, 1.5708, 1.81514), Vector3(0, 1.5708, 1.35263), Vector3(0, 1.5708, 1.81514), Vector3(0, 1.5708, 1.43117), Vector3(0, 1.5708, 1.7017)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -6.28319)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -210,38 +160,14 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Models/forklift:visible")
+tracks/3/path = NodePath("Models/forklift:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.33333, 1.43333, 1.53333, 1.63333, 1.73333, 1.83333, 1.95),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [true, true, false, true, false, true, false, true]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("StateMachine:state")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("StateMachine/Failing:damping_factor")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.366667, 0.833333, 1),
+"times": PackedFloat32Array(0, 0.166667, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.7, 0.3, 0.1, 0.0]
+"values": [Vector3(0, 0, 0), Vector3(0, 0.18, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_4xvwh"]
@@ -253,7 +179,7 @@ tracks/0/path = NodePath("StateMachine:danger_state")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.366667),
+"times": PackedFloat32Array(0.0666667, 0.366667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -295,8 +221,8 @@ tracks/3/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 0.315, -0.085), Vector3(0, 0.395, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_uijvq"]
-resource_name = "left_flip"
+[sub_resource type="Animation" id="Animation_g7r1l"]
+resource_name = "back_flip"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -304,7 +230,7 @@ tracks/0/path = NodePath("StateMachine:danger_state")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333),
+"times": PackedFloat32Array(0.0666667, 0.366667),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -319,7 +245,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(0.258816, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 6.28319)]
+"values": [Vector3(0, 0, 0), Vector3(-6.28319, 0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -343,65 +269,13 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.633333),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.08, 0.315, 0), Vector3(-0.045, 0.315, 0), Vector3(0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_kct70"]
-resource_name = "right_flip"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StateMachine:danger_state")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Models/forklift:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.258816, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, -6.28319)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Models/forklift:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.1, 0.1, 0.1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Models/forklift:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.633333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.08, 0.315, 0), Vector3(0.045, 0.315, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0.315, 0.09), Vector3(0, 0.395, -0.065), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kct70"]
 _data = {
 &"RESET": SubResource("Animation_47ure"),
 &"back_flip": SubResource("Animation_g7r1l"),
-&"failing": SubResource("Animation_t514h"),
 &"front_flip": SubResource("Animation_4xvwh"),
 &"left_flip": SubResource("Animation_uijvq"),
 &"right_flip": SubResource("Animation_kct70")
@@ -413,6 +287,12 @@ model = NodePath("Models/forklift")
 ground_ray = NodePath("RigidBody/GroundRays/GroundRayLB")
 rigid_body = NodePath("RigidBody")
 ui = NodePath("Ui")
+
+[node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("followable")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.189186, 0)
+fov = 80.0
+script = ExtResource("2_f2qr2")
+followable = NodePath("../RigidBody")
 
 [node name="Direction" type="Sprite3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0.1, 0.5)
@@ -469,12 +349,11 @@ script = ExtResource("7_g7r1l")
 base_player = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody/GrindChecker"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705454, -0.0235922)
-shape = SubResource("CapsuleShape3D_47ure")
+shape = SubResource("SphereShape3D_wjxug")
 
 [node name="Ui" parent="." instance=ExtResource("8_t514h")]
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("base_player", "ground_rays", "rigid_body", "idle_node", "jumping_node", "running_node", "falling_node", "grinding_node", "failing_node", "direction_arrow")]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("base_player", "ground_rays", "rigid_body", "idle_node", "jumping_node", "running_node", "falling_node", "grinding_node", "direction_arrow")]
 script = ExtResource("9_jhk03")
 base_player = NodePath("..")
 ground_rays = NodePath("../RigidBody/GroundRays")
@@ -484,7 +363,6 @@ jumping_node = NodePath("Jumping")
 running_node = NodePath("Running")
 falling_node = NodePath("Falling")
 grinding_node = NodePath("Grinding")
-failing_node = NodePath("Failing")
 direction_arrow = NodePath("../Direction")
 
 [node name="Jumping" type="Node" parent="StateMachine"]
@@ -523,34 +401,9 @@ transform = Transform3D(-0.012941, 0, 0.0482963, 0, 0.05, 0, -0.0482963, 0, -0.0
 texture = ExtResource("6_4xvwh")
 
 [node name="forklift" parent="Models" instance=ExtResource("4_47ure")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-
-[node name="Cameras" type="Node3D" parent="." node_paths=PackedStringArray("followable", "far_back_camera", "close_back_camera", "grind_camera")]
-script = ExtResource("18_kct70")
-followable = NodePath("../RigidBody")
-far_back_camera = NodePath("BackFarCamera")
-close_back_camera = NodePath("BackCloseCamera")
-grind_camera = NodePath("GrindCamera")
-
-[node name="BackCloseCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.451356, -0.871913)
-fov = 90.0
-
-[node name="BackFarCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.797511, -1.26264)
-current = true
-fov = 90.0
-
-[node name="GrindCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(-0.962763, 0, -0.270348, 0.0744999, 0.961281, -0.265309, 0.25988, -0.27557, -0.925485, -0.164812, 0.167182, -0.303235)
-fov = 121.204
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 1.74846e-08, 0, -1.74846e-08, 0.1, 0, 0, 0)
 
 [node name="AnimationManager" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_kct70")
 }
-
-[node name="GrindAble" type="Sprite3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0.1, 0.5)
-texture_filter = 0
-texture = ExtResource("3_uijvq")

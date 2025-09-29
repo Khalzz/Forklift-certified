@@ -2,17 +2,22 @@
 
 [ext_resource type="Script" uid="uid://dvoaify86kj5b" path="res://Assets/Scripts/Player/ui.gd" id="1_oyw1i"]
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("state_label", "can_grind_label")]
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("state_label", "can_grind_label", "can_trick_label", "points", "combo_points", "combo_tricks", "combo_container")]
 script = ExtResource("1_oyw1i")
 state_label = NodePath("Panel/MarginContainer/DebugLabels/State")
 can_grind_label = NodePath("Panel/MarginContainer/DebugLabels/CanGrind")
+can_trick_label = NodePath("Panel/MarginContainer/DebugLabels/CanTrick")
+points = NodePath("MarginContainer/DebugLabels/Points")
+combo_points = NodePath("ComboContainer/ComboBoxContainer/ComboPoints")
+combo_tricks = NodePath("ComboContainer/ComboBoxContainer/ComboTricks")
+combo_container = NodePath("ComboContainer")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -141.0
-offset_bottom = 97.0
+offset_bottom = 124.0
 grow_horizontal = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
@@ -43,6 +48,10 @@ text = "State: Running"
 layout_mode = 2
 text = "Can Grind: True"
 
+[node name="CanTrick" type="Label" parent="Panel/MarginContainer/DebugLabels"]
+layout_mode = 2
+text = "Can Trick: True"
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 121.0
 offset_bottom = 77.0
@@ -58,3 +67,58 @@ layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "Score: 0"
+
+[node name="ComboContainer" type="MarginContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -222.0
+offset_top = -205.0
+offset_right = 222.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.00311, 1)
+theme_override_constants/margin_bottom = 130
+
+[node name="ComboBoxContainer" type="VBoxContainer" parent="ComboContainer"]
+layout_mode = 2
+
+[node name="ComboTricks" type="RichTextLabel" parent="ComboContainer/ComboBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[s]Trick 1, Trick 2, Trick 3[/s]"
+fit_content = true
+tab_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ComboPoints" type="RichTextLabel" parent="ComboContainer/ComboBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.568627, 0.623529, 0.921569, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 23
+bbcode_enabled = true
+text = "0000"
+fit_content = true
+tab_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeOfGrace" type="Panel" parent="ComboContainer/ComboBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="ComboContainer/ComboBoxContainer/TimeOfGrace"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

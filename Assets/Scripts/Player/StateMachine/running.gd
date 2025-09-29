@@ -17,7 +17,7 @@ func update(delta: float):
 	$"../..".base(delta, 10)
 
 	if get_parent().is_touching_ground():
-		if Input.is_action_pressed("jump"): 
+		if Input.is_action_pressed("jump"):
 			$"../..".squash(delta, 50)
 		if Input.is_action_just_released("jump"):
 			$"../../Models/Sparks".visible = false

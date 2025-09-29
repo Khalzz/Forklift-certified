@@ -20,11 +20,11 @@ var path
 var path_follower
 var progress_ratio
 
-# -------------------------------------
 var grind_speed = 0
 var reverse = 1.0
 
 var grind_angle = 0.0
+var initial_velocity = Vector3.ZERO
 
 func _ready() -> void:
 	rigidbody = $"../../RigidBody"
@@ -46,11 +46,10 @@ func start():
 	
 	var player_dir: Vector3 = Vector3.FORWARD.rotated(Vector3.UP, $"../../Models".global_rotation.y)
 	
-	global_path_dir = actionable_grind.path_follower.get_global_direction(
+	global_path_dir = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
 		path_follower.progress,
-	).normalized() * alignment
-	
+	).normalized()
 	global_path_dir.y = 0
 	player_dir.y = 0
 	
@@ -65,9 +64,7 @@ func start():
 		if bearing < 0:
 			bearing += 360.0
 		
-		print("path direction: ", global_path_dir)
-		print("Angle between player and path (radians): ", angle)
-		print("Angle in degrees: ", bearing)
+		grind_angle = bearing
 		
 		var direction = global_path_dir.normalized()
 		var target_position = $"../../Models".global_transform.origin + direction
@@ -76,27 +73,45 @@ func start():
 	arrow.global_transform.origin = path_follower.global_transform.origin
 	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.UP)
 	
-	
-	
 	rigidbody.freeze = true
+	initial_velocity = rigidbody.linear_velocity
 	rigidbody.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	
+	$"../../Cameras".set_followable($"../../Models")
+	# $"../../Cameras".set_camera($"../../Cameras".Cameras.Grind)
 	
 	$"../../RigidBody/CollisionShape3D".disabled = true
 	$"../../RigidBody/GroundRays".checking_floor(false)
-	$"../../Camera".set_followable($"../../Models")
+	$"../../Cameras".set_followable($"../../Models")
+
+func trick_definition(angle):	
+	if angle > 315 or angle < 45:
+		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
+		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.FrontGrind)
+	elif angle > 45 and angle < 135:
+		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
+		$"../../Models".rotate_y(deg_to_rad(90))
+		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.SideGrind)
+		
+	elif angle > 135 and angle < 225:
+		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
+		$"../../Models".rotate_y(deg_to_rad(180))
+		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.BackGrind)
+	elif angle > 225 and angle < 315:
+		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
+		$"../../Models".rotate_y(deg_to_rad(-90))
+		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.SideGrind)
 
 func update(delta: float):
 	$"../..".base(delta, 100)
 	
-	global_path_dir = actionable_grind.path_follower.get_global_direction(
+	global_path_dir = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
 		path_follower.progress,
-	).normalized() * alignment
+	).normalized()
 	
-	$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
-	
-	# Move the player model through the grind
 	move(delta)
+	trick_definition(grind_angle)
 	
 	# Set positioning
 	$"../../Models".global_position = path_follower.global_position
@@ -117,15 +132,15 @@ func move(delta):
 		actionable_grind.curve,
 		path_follower.progress,
 	).normalized()
-	var horizontal_speed = grind_speed + (1.0 * alignment)
+	
+	const speed_plus = 1.0
+	var horizontal_speed = grind_speed + (speed_plus * alignment)
 	var curve_length = actionable_grind.curve.get_baked_length()
 	if curve_length == 0:
 		return
 	var progress_increment = (horizontal_speed * delta) / curve_length
+	
 	path_follower.progress += progress_increment
-
-	rigidbody.linear_velocity = path_dir * horizontal_speed
-	rigidbody.linear_velocity.y = 0
 
 	var facing_dir = (path_dir * horizontal_speed).normalized()
 	
@@ -133,9 +148,6 @@ func move(delta):
 	velocity.y = 0
 
 	rigidbody.linear_velocity = velocity
-
-	# Based on this we should define the trick (like 90 deg of rotation between the grind and the player should make a tailslide to the right)
-	
 
 func set_base_speed():
 	var horizontal_velocity = Vector3(rigidbody.linear_velocity.x, 0, rigidbody.linear_velocity.z)
@@ -149,19 +161,12 @@ func end_grind():
 	rigidbody.freeze = false
 	$"../../RigidBody/CollisionShape3D".disabled = false
 	$"../../RigidBody/GroundRays".checking_floor(true)
-	$"../../Camera".set_followable(rigidbody)
-
-func get_grind_alignment(path):
-	var path_direction: Vector3 = path.path_follower.get_path_direction(path.curve, path.path_follower.progress, 0.1) # Change the 0.1 to delta if needed
-	var player_direction: Vector3 = rigidbody.linear_velocity.normalized()
-	grind_speed = rigidbody.linear_velocity.length() + 2
-	grind_direction = atan2(path_direction.x, path_direction.z)
+	$"../../Cameras".set_followable(rigidbody)
 
 func check_fall():
 	var length_grind = path.curve.get_baked_length()
 	
 	if !path.loop:
-		# Here check when the path gets either to the end if elignment is > 0 or to the start if alignment < 0
 		if (alignment > 0 and path_follower.progress >= length_grind) or (alignment < 0 and path_follower.progress <= 0.0):
 			end_grind()
 			get_parent().change_state(get_parent().States.Running)
@@ -225,9 +230,9 @@ func set_alignment():
 	).normalized()
 	
 	var player_direction: Vector3 = rigidbody.linear_velocity
-	player_direction = player_direction.normalized()
 	
-	var dot_result = path_direction.dot(player_direction)
-	alignment = 1.0 if dot_result >= 0 else -1.0
+	var player_direction_normalized = player_direction.normalized()
+	var dot_result = path_direction.dot(player_direction_normalized)
 	
+	alignment = 1.0 if dot_result > 0 else -1.0
 	grind_direction = atan2(path_direction.x, path_direction.z)

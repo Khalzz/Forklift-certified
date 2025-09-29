@@ -91,7 +91,7 @@ curve = SubResource("Curve3D_65pw5")
 tag = "Grindable"
 
 [node name="Grindable2" parent="Boxes" instance=ExtResource("15_c5xim")]
-transform = Transform3D(0.902495, 0, -0.4307, 0, 0.8, 0, 0.4307, 0, 0.902495, 0.00552225, 0, 2.99637)
+transform = Transform3D(1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0.00552225, 0, 2.99637)
 
 [node name="GrindPath" parent="Boxes/Grindable2" instance=ExtResource("16_x8mav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)
@@ -99,7 +99,7 @@ curve = SubResource("Curve3D_65pw5")
 tag = "Grindable 2"
 
 [node name="box" parent="Boxes" instance=ExtResource("16_b07cf")]
-transform = Transform3D(2.5618, 0, 1.56115, 0, 0.5, 0, -1.56115, 0, 2.5618, -2.68269, 0.215767, 8.45537)
+transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, -2.68269, 0.215767, 8.45537)
 
 [node name="GrindPath" parent="Boxes/box" instance=ExtResource("16_x8mav")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499175, 0)

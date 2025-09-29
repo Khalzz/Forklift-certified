@@ -51,11 +51,6 @@ func apply_deadzone(value: float, deadzone: float) -> float:
 	else:
 		return value
 
-func set_followable(element):
-	followable = element
-	last_position = followable.global_position
-	last_direction = Vector3.FORWARD
-
 func follow_node_movement() -> Vector3:
 	if followable == null:
 		return global_position
@@ -71,7 +66,7 @@ func follow_node_movement() -> Vector3:
 		last_direction = movement.normalized()
 
 	# Apply camera offset
-	var offset_up   = Vector3(0.0, 0.5, 0.0)
+	var offset_up   = Vector3(0.0, 0.2, 0.0)
 	var offset_back = -last_direction
 
 	return followable.global_position + offset_up + offset_back
@@ -84,8 +79,8 @@ func follow_rigidbody_velocity() -> Vector3:
 		if velocity.length() > movement_threshold:
 			last_direction = velocity.normalized()
 
-		var offset_up    = Vector3.UP * 1.0
-		var offset_back  = -last_direction * 2.0
+		var offset_up    = Vector3.UP * 0.8
+		var offset_back  = -last_direction * 1.0
 		return followable.global_position + offset_up + offset_back
 	
 	var offset_up    = Vector3.UP * 1.0
