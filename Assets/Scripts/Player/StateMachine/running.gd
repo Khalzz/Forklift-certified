@@ -38,7 +38,7 @@ func fixed_update(delta: float):
 	
 	if get_parent().rigid_body.linear_velocity.length() > 0.009:
 		if get_parent().is_touching_ground():
-			get_parent().rigid_body.rotation.y += (2.0 * get_parent().x_input) * delta
+			get_parent().rigid_body.rotation.y -= (2.0 * get_parent().x_input) * delta
 	
 	var z_speed = get_parent().rigid_body.linear_velocity.dot(get_parent().rigid_body.transform.basis.z)
 	var x_speed = get_parent().rigid_body.linear_velocity.dot(get_parent().rigid_body.transform.basis.x)

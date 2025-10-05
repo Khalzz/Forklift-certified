@@ -78,6 +78,7 @@ var tricks_list = []
 var tricks_string = ""
 
 @export var can_trick = true
+@export var can_grind = true
 
 var point_checker_scale = 0.0
 

@@ -1,0 +1,118 @@
+[gd_scene load_steps=13 format=3 uid="uid://b1qpd0dy7vem6"]
+
+[ext_resource type="PackedScene" uid="uid://rnlbjyt78edc" path="res://Assets/Models/forklift.glb" id="1_853f1"]
+[ext_resource type="Script" uid="uid://cao4n7awhq1g5" path="res://Scenes/main_menu.gd" id="1_df05h"]
+[ext_resource type="Texture2D" uid="uid://bemvhniy4n5e6" path="res://Assets/Materials/orange.png" id="2_8saeu"]
+[ext_resource type="PackedScene" uid="uid://b8jh63vm3tr0h" path="res://Assets/Prefabs/blocks/box.tscn" id="2_8um5k"]
+[ext_resource type="PackedScene" uid="uid://j8r2xo6jof" path="res://Assets/Prefabs/blocks/grindable.tscn" id="5_xim88"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghw46"]
+albedo_texture = ExtResource("2_8saeu")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_df05h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8um5k"]
+friction = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xim88"]
+size = Vector3(1, 0.0229492, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_853f1"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_efk68"]
+sky_material = SubResource("ProceduralSkyMaterial_853f1")
+
+[sub_resource type="Environment" id="Environment_8saeu"]
+background_mode = 1
+background_color = Color(0.509306, 0.667922, 1, 1)
+sky = SubResource("Sky_efk68")
+tonemap_mode = 2
+fog_light_energy = 13.46
+
+[node name="MainMenu" type="Node3D"]
+script = ExtResource("1_df05h")
+
+[node name="Settings" type="Node3D" parent="."]
+transform = Transform3D(0.059236713, 0, -0.998244, 0, 1, 0, 0.998244, 0, 0.059236713, 1.0043869, 0, -0.0012911558)
+
+[node name="MainBox" parent="Settings" instance=ExtResource("2_8um5k")]
+transform = Transform3D(0.63999957, 0, 0, 0, 0.5, 0, 0, 0, 0.33, -0.025289722, 0, 0.08996761)
+
+[node name="MainBox2" parent="Settings" instance=ExtResource("2_8um5k")]
+transform = Transform3D(0.6812632, 0, -1.1641532e-10, 0, 0.5, 0, -1.8626451e-08, 0, -0.01554433, -0.016780034, 0.23876774, -0.053439736)
+
+[node name="SettingsText" type="Label3D" parent="Settings"]
+transform = Transform3D(0.9970998, 0.07609789, -0.00017207116, -0.076097876, 0.9970901, -0.0045157177, -0.00017207116, 0.004515719, 0.9999894, 0.0024562962, 0.3857013, -0.041392922)
+text = "Settings"
+font_size = 30
+outline_size = 2
+
+[node name="Camera" type="Camera3D" parent="Settings"]
+transform = Transform3D(0.9927819, 0.117196836, -0.02547225, -0.11962201, 0.98290277, -0.1399741, 0.00863222, 0.14201078, 0.9898274, -0.024303477, 0.3101318, 0.43817866)
+fov = 98.88604
+
+[node name="Play" type="Node3D" parent="."]
+transform = Transform3D(0.059236713, 0, -0.998244, 0, 1, 0, 0.998244, 0, 0.059236713, 0, 0, -1.2549988)
+
+[node name="Camera" type="Camera3D" parent="Play"]
+transform = Transform3D(0.05923671, 0.1347522, 0.989107, 0, 0.99084705, -0.13498926, -0.99824387, 0.00799632, 0.05869452, 0.7560923, 0.095282435, 0.06352769)
+
+[node name="PlayText" type="Label3D" parent="Play"]
+transform = Transform3D(-0.3061771, 0, 0.9519745, 0, 1, 0, -0.9519745, 0, -0.3061771, -0.4025932, 0.46466243, 0.2764679)
+text = "Play"
+font_size = 100
+outline_size = 2
+
+[node name="forklift" parent="Play" instance=ExtResource("1_853f1")]
+transform = Transform3D(0.08283245, 0, 0.05602487, 0, 0.1, 0, -0.05602487, 0, 0.08283245, -0.050007343, 0, -0.30862957)
+
+[node name="Exit" type="Node3D" parent="."]
+
+[node name="Grindable" parent="Exit" instance=ExtResource("5_xim88")]
+transform = Transform3D(-4.371139e-09, 0.6, -2.1855694e-08, 0, -2.6226834e-08, -0.5, -0.1, -2.6226834e-08, 9.553427e-16, -0.14879811, 0.24233902, 1.0130267)
+
+[node name="PlayText" type="Label3D" parent="Exit"]
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 1, 0, 8.742277e-08, 0, -0.99999994, -0.0014964342, 0.36526465, 1.0041327)
+text = "Exit"
+font_size = 20
+outline_size = 2
+
+[node name="Camera" type="Camera3D" parent="Exit"]
+transform = Transform3D(-1, -1.1864625e-08, -8.661392e-08, 6.503206e-08, 0.5611737, -0.8276981, 5.842578e-08, -0.8276981, -0.5611737, -0.0037528872, 0.038645744, 0.7480515)
+fov = 126.22696
+
+[node name="Floor" type="Node3D" parent="."]
+transform = Transform3D(1.9038141, 0, 0, 0, 1, 0, 0, 0, 1.9729886, 0, 0, 0)
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ghw46")
+mesh = SubResource("PlaneMesh_df05h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor/FloorMesh"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_8um5k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/FloorMesh/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0127389, 0)
+shape = SubResource("BoxShape3D_xim88")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8saeu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0977219, 0.995214, 0, -0.995214, 0.0977219, 0, 20.9353, 0)
+light_volumetric_fog_energy = 0.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_blur = 1.312
+directional_shadow_max_distance = 91.3
+
+[node name="ActiveCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.31434506, 0)
+current = true

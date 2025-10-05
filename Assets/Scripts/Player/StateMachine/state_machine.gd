@@ -43,9 +43,6 @@ var newly_started = true
 var is_grinding
 
 # Controler
-var x_input = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
-var y_input = -Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
-
 var xr_input = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 var yr_input = -Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 
@@ -53,23 +50,25 @@ var grindable_states = [States.Idle, States.Jumping, States.Falling, States.Runn
 
 var static_states = [States.Grinding]
 
+var x_input = Vector2.ZERO
+var y_input = Vector2.ZERO
+
 func air_tricks():
-	if (Input.is_action_just_pressed("flip") and x_input > 0.5) or (Input.is_action_just_pressed("flip") and x_input < 0.5 and x_input > -0.5 and y_input > -0.5 and y_input < 0.5 ):
+	if (Input.is_action_just_pressed("flip") and Controller.l_stick.x < 0.0) or (Input.is_action_just_pressed("flip") and Controller.l_stick == Vector2(0.0, 0.0)):
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.LeftFlip)
-	if Input.is_action_just_pressed("flip") and x_input < -0.5:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.x > 0.0:
 		#$"../AnimationManager".play("right_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.RightFlip)
-	if Input.is_action_just_pressed("flip") and y_input < -0.5:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.y < 0.0:
 		#$"../AnimationManager".play("back_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.BackFlip)
-	if Input.is_action_just_pressed("flip") and y_input > 0.5:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.y > 0.0:
 		#$"../AnimationManager".play("front_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.FrontFlip)
 
-
 func _process(delta: float) -> void:
-	x_input = -Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
-	y_input = -Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
+	x_input = Controller.l_stick.x
+	y_input = -Controller.l_stick.y
 	xr_input = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	yr_input = -Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
 	
@@ -98,8 +97,6 @@ func _process(delta: float) -> void:
 				$"../GrindAble".global_position = $Grinding.actionable_grind.path_follower.global_position
 				if Input.is_action_just_pressed("grind") and $Grinding.actionable_grind:
 					change_state(States.Grinding)
-		
-			
 
 func is_point_inside_capsule(point: Vector3, collision_shape: CollisionShape3D) -> bool:
 	if not collision_shape.shape is CapsuleShape3D:

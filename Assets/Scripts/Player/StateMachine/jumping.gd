@@ -38,4 +38,4 @@ func fixed_update(delta):
 	
 	if jumping:
 		if !get_parent().is_touching_ground():
-			get_parent().rigid_body.rotation.y += (10.0 * get_parent().x_input) * delta
+			get_parent().rigid_body.rotation.y -= (10.0 * get_parent().x_input) * delta
