@@ -10,6 +10,8 @@ extends CanvasLayer
 @export var combo_tricks: RichTextLabel
 @export var	combo_container: Control
 
+@export var grind_curve: Control
+
 @onready var time_of_grace = $ComboContainer/ComboBoxContainer/TimeOfGrace/ColorRect
 
 func _process(delta: float) -> void:

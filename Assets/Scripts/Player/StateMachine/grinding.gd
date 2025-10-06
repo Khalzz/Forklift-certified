@@ -28,6 +28,7 @@ var initial_velocity = Vector3.ZERO
 
 func _ready() -> void:
 	rigidbody = $"../../RigidBody"
+	$"../../Ui".grind_curve.stop_grind()
 
 func start():
 	path_follower = actionable_grind.path_follower
@@ -69,6 +70,8 @@ func start():
 		var direction = global_path_dir.normalized()
 		var target_position = $"../../Models".global_transform.origin + direction
 	
+	$"../../Ui".grind_curve.start_grind()
+	
 	var arrow = $"../../Direction"
 	arrow.global_transform.origin = path_follower.global_transform.origin
 	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.UP)
@@ -105,6 +108,10 @@ func trick_definition(angle):
 func update(delta: float):
 	$"../..".base(delta, 100)
 	
+	if $"../../Ui".grind_curve.should_fall:
+		end_grind()
+		get_parent().change_state(get_parent().States.Failing)
+	
 	global_path_dir = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
 		path_follower.progress,
@@ -123,6 +130,7 @@ func update(delta: float):
 	if Input.is_action_just_released("jump"):
 		end_grind()
 		get_parent().change_state(get_parent().States.Jumping)
+		
 	check_fall()
 
 func move(delta):
@@ -162,6 +170,7 @@ func end_grind():
 	$"../../RigidBody/CollisionShape3D".disabled = false
 	$"../../RigidBody/GroundRays".checking_floor(true)
 	$"../../Cameras".set_followable(rigidbody)
+	$"../../Ui".grind_curve.stop_grind()
 
 func check_fall():
 	var length_grind = path.curve.get_baked_length()

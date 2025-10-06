@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cyctv4o556y1e"]
+[gd_scene load_steps=16 format=3 uid="uid://cyctv4o556y1e"]
 
 [ext_resource type="Texture2D" uid="uid://bemvhniy4n5e6" path="res://Assets/Materials/orange.png" id="1_f2nln"]
 [ext_resource type="PackedScene" uid="uid://b8wm5aids0hsd" path="res://Assets/Prefabs/Player/player.tscn" id="5_efk68"]
+[ext_resource type="PackedScene" uid="uid://d07s53qpchp40" path="res://Assets/Prefabs/World/cone.tscn" id="6_06fis"]
 [ext_resource type="PackedScene" uid="uid://j8r2xo6jof" path="res://Assets/Prefabs/blocks/grindable.tscn" id="15_c5xim"]
 [ext_resource type="PackedScene" uid="uid://b8jh63vm3tr0h" path="res://Assets/Prefabs/blocks/box.tscn" id="16_b07cf"]
 [ext_resource type="PackedScene" uid="uid://3n18bokpi40a" path="res://Assets/Prefabs/Grind/grind_path.tscn" id="16_x8mav"]
@@ -139,3 +140,78 @@ transform = Transform3D(1.73018, -0.392773, -2.39566, 2.41825, 0.295901, -4.5699
 
 [node name="box17" parent="Boxes" instance=ExtResource("16_b07cf")]
 transform = Transform3D(1.14858, -0.260742, -8.14489, 2.41825, 0.295901, -3.26522e-07, 1.35383, -0.307337, 6.91005, -1.82075, 2.27864, 28.3761)
+
+[node name="Cone" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9181886, 0.02186434, 4.1230288)
+
+[node name="Cone2" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1428654, 0.465767, 9.275415)
+
+[node name="Cone3" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3608308, 0.465767, 9.260748)
+
+[node name="Cone4" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5636063, 0.465767, 9.272306)
+
+[node name="Cone5" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9338093, 0.46576694, 9.281496)
+
+[node name="Cone6" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.725958, 0.465767, 9.307734)
+
+[node name="Cone7" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4573822, 0.465767, 9.048754)
+
+[node name="Cone8" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2092652, 0.46576694, 9.061422)
+
+[node name="Cone9" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8200326, 0.465767, 9.0745125)
+
+[node name="Cone10" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0123224, 0.465767, 9.067661)
+
+[node name="Cone11" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3431988, 0.465767, 8.852303)
+
+[node name="Cone12" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0947344, 0.465767, 8.857719)
+
+[node name="Cone13" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8875866, 0.465767, 8.874925)
+
+[node name="Cone14" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2233107, 0.46576706, 8.6086445)
+
+[node name="Cone15" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.955634, 0.465767, 8.6284685)
+
+[node name="Cone16" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1007404, 0.465767, 8.370055)
+
+[node name="Cone17" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0107706, 1.1275599, 14.379924)
+
+[node name="Cone18" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3422613, 1.0755376, 14.390011)
+
+[node name="Cone19" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9611729, 0.9784085, 14.407838)
+
+[node name="Cone20" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9048899, 2.715115, 19.147709)
+
+[node name="Cone21" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.79310685, 2.5628574, 20.007242)
+
+[node name="Cone22" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.33276322, 1.9358329, 19.365683)
+
+[node name="Cone23" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5320115, 2.1691334, 28.250265)
+
+[node name="Cone24" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9708846, 1.8132769, 27.983732)
+
+[node name="Cone25" parent="Boxes" instance=ExtResource("6_06fis")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4322605, 1.55095, 27.785604)
