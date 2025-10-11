@@ -34,7 +34,7 @@ func fixed_update(delta: float):
 	else:
 		$"../../Models/Sparks".visible = false
 
-	get_parent().rigid_body.apply_central_force(((get_parent().rigid_body.transform.basis.z) * 10.0) * throttle_axis)
+	get_parent().rigid_body.apply_central_force(((get_parent().rigid_body.transform.basis.z) * 14.0) * throttle_axis)
 	
 	if get_parent().rigid_body.linear_velocity.length() > 0.009:
 		if get_parent().is_touching_ground():

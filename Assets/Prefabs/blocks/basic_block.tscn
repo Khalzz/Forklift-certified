@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://otrqi1bye1a5"]
+
+[ext_resource type="Texture2D" uid="uid://b24wme1o6ibod" path="res://Assets/Materials/purple.png" id="1_iotes"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hjps7"]
+albedo_texture = ExtResource("1_iotes")
+uv1_triplanar = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_13vmv"]
+friction = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vnleo"]
+
+[node name="BasicBlock" type="CSGBox3D"]
+material = SubResource("StandardMaterial3D_hjps7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_13vmv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_vnleo")

@@ -39,6 +39,6 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_select"):
 		match selected:
 			Selectables.Play:
-				get_tree().change_scene_to_file("res://Scenes/Test.tscn")
+				get_tree().change_scene_to_file("res://Scenes/Levels/alpha_map.tscn")
 			Selectables.Exit:
 				get_tree().quit()

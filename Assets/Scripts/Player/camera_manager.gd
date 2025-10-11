@@ -124,8 +124,6 @@ func game_camera(delta: float, camera_position: Vector3) -> void:
 	cam.look_at(followable.global_position)
 	
 	# Smoothing factor (0.1 to 0.3 is usually good; higher values = more smoothing)
-	var smoothing_speed = 10.0  
-	
 	if camera_data[camera_selected].has("smoothing"):
 		cam.global_position = cam.global_position.lerp(camera_position, camera_data[camera_selected]["smoothing"] * delta)
 	else:

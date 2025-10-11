@@ -80,9 +80,6 @@ func start():
 	initial_velocity = rigidbody.linear_velocity
 	rigidbody.linear_velocity = Vector3(0.0, 0.0, 0.0)
 	
-	$"../../Cameras".set_followable($"../../Models")
-	# $"../../Cameras".set_camera($"../../Cameras".Cameras.Grind)
-	
 	$"../../RigidBody/CollisionShape3D".disabled = true
 	$"../../RigidBody/GroundRays".checking_floor(false)
 	$"../../Cameras".set_followable($"../../Models")
@@ -133,6 +130,14 @@ func update(delta: float):
 		
 	check_fall()
 
+func set_base_speed():
+	# Get the actual horizontal speed magnitude
+	var horizontal_velocity = Vector3(rigidbody.linear_velocity.x, 0, rigidbody.linear_velocity.z)
+	var horizontal_speed = horizontal_velocity.length()
+	
+	# Store as absolute value - alignment handles direction in move()
+	grind_speed = horizontal_speed
+
 func move(delta):
 	if not path_follower:
 		return
@@ -141,26 +146,21 @@ func move(delta):
 		path_follower.progress,
 	).normalized()
 	
-	const speed_plus = 1.0
-	var horizontal_speed = grind_speed + (speed_plus * alignment)
+	# Apply alignment to get directional speed
+	var horizontal_speed = grind_speed * alignment
+	
 	var curve_length = actionable_grind.curve.get_baked_length()
 	if curve_length == 0:
 		return
-	var progress_increment = (horizontal_speed * delta) / curve_length
+	var progress_increment = (horizontal_speed * delta)
 	
 	path_follower.progress += progress_increment
 
-	var facing_dir = (path_dir * horizontal_speed).normalized()
-	
+	# Velocity follows the path direction with the aligned speed
 	var velocity = path_dir * horizontal_speed
 	velocity.y = 0
 
 	rigidbody.linear_velocity = velocity
-
-func set_base_speed():
-	var horizontal_velocity = Vector3(rigidbody.linear_velocity.x, 0, rigidbody.linear_velocity.z)
-	var horizontal_speed = horizontal_velocity.length()
-	grind_speed = horizontal_speed * alignment
 
 func end_grind():
 	$"../../Models/Sparks".visible = false

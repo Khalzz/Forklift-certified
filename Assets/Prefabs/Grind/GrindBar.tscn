@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbiuvegoiwn1q"]
+
+[ext_resource type="PackedScene" uid="uid://b77wnb1fhkjmg" path="res://Assets/Models/World/Obstacles/Grind/Grind.glb" id="1_8mg7l"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lwpgb"]
+friction = 0.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rmwdv"]
+size = Vector3(0.023803711, 0.20379639, 0.6574707)
+
+[node name="GrindBar" type="Node3D"]
+
+[node name="Grind" parent="." instance=ExtResource("1_8mg7l")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_lwpgb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0004272461, 0.100372314, 0.0008544922)
+shape = SubResource("BoxShape3D_rmwdv")
