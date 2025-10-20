@@ -3,6 +3,24 @@ extends Node
 # This code defines the way tricks will be handled and displayed in the screen
 
 """
+Todo: 
+	- Add switches as tricks where if the player presses one key he will change
+		his orientation instantly from advancing to going backwards
+
+Remember dumbass the difference of concept between "Falling and landing"
+
+This trick container should have an especific logic handling, this mainly is:
+	- A combo is started once the player does one trick DONE
+	- A trick is added to the combo once the player does another trick or lands DONE
+		the trick with a "Connector trick" like:
+			- Manuals, switches, or other tricks.
+	- A combo is broken once the players fails to complete the execution of
+		a trick or once he lands another trick withouc a connector trick
+
+"""
+
+
+"""
 	Trick Manager
 
 	Trick manager is a script that will mainly define the way tricks and basic points will be taken
@@ -82,6 +100,10 @@ var tricks_string = ""
 
 var point_checker_scale = 0.0
 
+var is_doing_trick = false
+var trick_point_adding_flag = false
+var landed = true
+
 # Functions:
 	# - Setter and getter
 	# - Display the trick name
@@ -89,6 +111,8 @@ var point_checker_scale = 0.0
 
 func _init() -> void:
 	multiplier = 0
+	is_doing_trick = false
+	
 
 func set_trick(trick: TricksEnum):
 	if trick == -1 or not can_trick:
@@ -98,8 +122,6 @@ func set_trick(trick: TricksEnum):
 		added_points = 0
 		multiplier = 0
 		return
-
-	# point_checker_scale = 1.0
 
 	var animation_player = $"../AnimationManager"
 	var trick_changed = (selected_trick != trick)
@@ -138,24 +160,32 @@ func get_trick():
 	return selected_trick
 
 func _process(delta: float) -> void:
-	# const base = 0.5
-	# point_checker_scale -= base * delta
-	
-	if point_checker_scale <= 0.0:
-		point_checker_scale = 0.0
-	
-	$"../Ui".time_of_grace.scale.x = point_checker_scale
+	$"../Ui".set_points(points) # Aprox them
 	
 	if selected_trick != -1:
-		# If the player failed
-		if tricks[selected_trick].get("fall", false):
-			selected_trick = null
+		# This is not working for some reason, check why the player stills falls even after this being commented
+		# if tricks[selected_trick].get("fall", false):
+			#selected_trick = null
+			
+		if $"../StateMachine".is_touching_ground():
+			failed_or_landed()
 		
 		# If the player is doing t he correct trick
-		if not tricks[selected_trick].has("unique"):
-			added_points += tricks[selected_trick].points * delta
-		$"../Ui".combo_tricks.set_text(tricks_string)
-		$"../Ui".combo_points.set_text(str(multiplier) + "x " + str(int(added_points)))
-		$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 1.0, delta * 10.0)
+		if tricks.has(selected_trick):
+			if not tricks[selected_trick].has("unique"):
+				added_points += tricks[selected_trick].points * delta
+			$"../Ui".combo_tricks.set_text(tricks_string)
+			$"../Ui".combo_points.set_text(str(multiplier) + "x " + str(int(added_points)))
+			$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 1.0, delta * 10.0)
 	else:
 		$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 0.0, delta * 5.0)
+		if trick_point_adding_flag:
+			points += added_points * multiplier
+			multiplier = 0
+			added_points	 = 0
+			trick_point_adding_flag = false
+		
+		
+func failed_or_landed():
+	trick_point_adding_flag = true
+	selected_trick = -1

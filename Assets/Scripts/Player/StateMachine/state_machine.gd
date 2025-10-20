@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 	
 	$"../TrickManager".can_trick = !danger_state
 	$"../Ui".can_trick_label.set_text("Can Trick: " + str($"../TrickManager".can_trick))
-		
+	
 	if is_touching_ground() and danger_state:
 		change_state(States.Failing)
 	
@@ -93,10 +93,9 @@ func _process(delta: float) -> void:
 			var offset = $Grinding.actionable_grind.curve.get_closest_offset(local_position)
 			$Grinding.actionable_grind.path_follower.progress = offset
 			
-			if is_point_inside_capsule($Grinding.actionable_grind.path_follower.global_position, $"../RigidBody/GrindChecker/CollisionShape3D"):
-				$"../GrindAble".global_position = $Grinding.actionable_grind.path_follower.global_position
-				if Input.is_action_just_pressed("grind") and $Grinding.actionable_grind:
-					change_state(States.Grinding)
+			$"../GrindAble".global_position = $Grinding.actionable_grind.path_follower.global_position
+			if Input.is_action_just_pressed("grind") and $Grinding.actionable_grind:
+				change_state(States.Grinding)
 
 func is_point_inside_capsule(point: Vector3, collision_shape: CollisionShape3D) -> bool:
 	if not collision_shape.shape is CapsuleShape3D:

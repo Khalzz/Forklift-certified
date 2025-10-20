@@ -70,7 +70,7 @@ func start():
 		var direction = global_path_dir.normalized()
 		var target_position = $"../../Models".global_transform.origin + direction
 	
-	$"../../Ui".grind_curve.start_grind()
+	$"../../Ui".grind_curve.start_grind(true)
 	
 	var arrow = $"../../Direction"
 	arrow.global_transform.origin = path_follower.global_transform.origin
@@ -82,7 +82,7 @@ func start():
 	
 	$"../../RigidBody/CollisionShape3D".disabled = true
 	$"../../RigidBody/GroundRays".checking_floor(false)
-	$"../../Cameras".set_followable($"../../Models")
+	$"../../CameraSubsystem".set_followable($"../../Models")
 
 func trick_definition(angle):	
 	if angle > 315 or angle < 45:
@@ -169,7 +169,7 @@ func end_grind():
 	rigidbody.freeze = false
 	$"../../RigidBody/CollisionShape3D".disabled = false
 	$"../../RigidBody/GroundRays".checking_floor(true)
-	$"../../Cameras".set_followable(rigidbody)
+	$"../../CameraSubsystem".set_followable(rigidbody)
 	$"../../Ui".grind_curve.stop_grind()
 
 func check_fall():
@@ -188,8 +188,10 @@ func get_grindables():
 	
 	for grindable in grindables:
 		var distance_to_element = grindable.path_follower.global_position.distance_to($"../../RigidBody".global_position)
-		if distance_to_element <= grind_check_radius:
-			grind_areas.append(grindable)
+		
+		# This should be between the grindable point and the player, not between the grindable OBJECT and player
+		# if distance_to_element <= grind_check_radius:
+		grind_areas.append(grindable)
 	
 	return grind_areas
 

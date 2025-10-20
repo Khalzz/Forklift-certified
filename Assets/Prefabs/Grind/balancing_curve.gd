@@ -1,6 +1,6 @@
 extends Control
 
-@onready var path_follow = $MarginContainer/CenterContainer/CenterContainer/Path2D/PathFollow2D
+@export var path_follow: PathFollow2D
 
 @export var lowest_speed = 0.2
 @export var fastest_speed = 1.0
@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 		if progress == 0.0 or progress == 1.0:
 			should_fall = true
 
-func start_grind():
+func start_grind(vertical):
 	should_fall = false
 	$".".visible = true
 	path_follow.progress_ratio = 0.5

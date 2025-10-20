@@ -155,4 +155,3 @@ size_flags_vertical = 0
 texture = ExtResource("3_w1wbn")
 
 [node name="Balancing_curve" parent="." instance=ExtResource("4_rw8yf")]
-visible = false

@@ -40,10 +40,10 @@ uv1_triplanar = true
 
 [sub_resource type="Curve3D" id="Curve3D_peqby"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.23773146, -3.4971151, 0, 0, 0, 0, 0, 0, 0, 0.21226013, 3.4905887),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.23773146, -3.4971151, 0, 0, 0, 0, 0, 0, 0, 0.21226013, 3.4905887, 0, 0, 0, 0, 0, 0, 1, 0.212, 3.491, 0, 0, 0, 0, 0, 0, 1, 0.238, -3.497, 0, 0, 0, 0, 0, 0, 0, 0.238, -3.497),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
-point_count = 2
+point_count = 5
 
 [sub_resource type="Curve3D" id="Curve3D_jqrvn"]
 _data = {
@@ -120,6 +120,7 @@ material = SubResource("StandardMaterial3D_hjps7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5017104, 0, 0)
 curve = SubResource("Curve3D_peqby")
 tag = "Grindable"
+loop = true
 
 [node name="PlantBlock2" type="CSGBox3D" parent="Boxes/MapBlocks/CSGCombiner3D"]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -8, 0.25, 0)
@@ -146,6 +147,7 @@ material = SubResource("StandardMaterial3D_hjps7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5017104, 0, 0)
 curve = SubResource("Curve3D_peqby")
 tag = "Grindable"
+loop = true
 
 [node name="Fountaine" type="CSGCylinder3D" parent="Boxes/MapBlocks/CSGCombiner3D"]
 radius = 1.3447266

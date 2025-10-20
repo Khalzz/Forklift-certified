@@ -522,26 +522,6 @@ transform = Transform3D(-0.012941, 0, 0.0482963, 0, 0.05, 0, -0.0482963, 0, -0.0
 [node name="forklift" parent="Models" instance=ExtResource("4_47ure")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
-[node name="Cameras" type="Node3D" parent="." node_paths=PackedStringArray("followable", "far_back_camera", "close_back_camera", "grind_camera")]
-script = ExtResource("18_kct70")
-followable = NodePath("../RigidBody")
-far_back_camera = NodePath("BackFarCamera")
-close_back_camera = NodePath("BackCloseCamera")
-grind_camera = NodePath("GrindCamera")
-
-[node name="BackCloseCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.451356, -0.871913)
-fov = 90.0
-
-[node name="BackFarCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.797511, -1.26264)
-current = true
-fov = 90.0
-
-[node name="GrindCamera" type="Camera3D" parent="Cameras"]
-transform = Transform3D(-0.962763, 0, -0.270348, 0.0744999, 0.961281, -0.265309, 0.25988, -0.27557, -0.925485, -0.164812, 0.167182, -0.303235)
-fov = 121.204
-
 [node name="AnimationManager" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_kct70")
@@ -551,3 +531,24 @@ libraries = {
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0.1, 0.5)
 texture_filter = 0
 texture = ExtResource("3_uijvq")
+
+[node name="CameraSubsystem" type="Node3D" parent="." node_paths=PackedStringArray("followable", "cameras_setter")]
+script = ExtResource("18_kct70")
+followable = NodePath("../RigidBody")
+cameras_setter = NodePath("Cameras")
+
+[node name="ActualCamera" type="Camera3D" parent="CameraSubsystem"]
+
+[node name="Cameras" type="Node3D" parent="CameraSubsystem"]
+
+[node name="BackCloseCamera" type="Camera3D" parent="CameraSubsystem/Cameras"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.451356, -1.2574832)
+fov = 90.0
+
+[node name="BackFarCamera" type="Camera3D" parent="CameraSubsystem/Cameras"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 1.3153647, -4.1952343)
+fov = 90.0
+
+[node name="GrindCamera" type="Camera3D" parent="CameraSubsystem/Cameras"]
+transform = Transform3D(0.95605093, -0.14450559, -0.25511718, 0.07449989, 0.961281, -0.26530856, 0.28357786, 0.2346423, 0.9297992, -0.164812, 0.045351475, 0.23072147)
+fov = 142.62326
