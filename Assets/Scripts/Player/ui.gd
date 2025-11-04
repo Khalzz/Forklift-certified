@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var state_label: Label
 @export var can_grind_label: Label
 @export var can_trick_label: Label
+@export var spin_count: Control
 
 # On screen labels
 @export var points: Label

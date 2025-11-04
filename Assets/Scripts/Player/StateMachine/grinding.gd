@@ -26,6 +26,9 @@ var reverse = 1.0
 var grind_angle = 0.0
 var initial_velocity = Vector3.ZERO
 
+var base_angle = 0.0
+var backside = false
+
 func _ready() -> void:
 	rigidbody = $"../../RigidBody"
 	$"../../Ui".grind_curve.stop_grind()
@@ -36,6 +39,8 @@ func start():
 	progress_ratio = path_follower.progress_ratio
 	grind_direction = null
 	grinding = true
+	base_angle = 0.0
+	backside = false
 	
 	var path_dir: Vector3 = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
@@ -50,7 +55,7 @@ func start():
 	global_path_dir = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
 		path_follower.progress,
-	).normalized()
+	).normalized() * -alignment
 	global_path_dir.y = 0
 	player_dir.y = 0
 	
@@ -83,26 +88,33 @@ func start():
 	$"../../RigidBody/CollisionShape3D".disabled = true
 	$"../../RigidBody/GroundRays".checking_floor(false)
 	$"../../CameraSubsystem".set_followable($"../../Models")
+	
+	set_base_angle(grind_angle)
 
-func trick_definition(angle):	
-	if angle > 315 or angle < 45:
-		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
-		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.FrontGrind)
-	elif angle > 45 and angle < 135:
-		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
-		$"../../Models".rotate_y(deg_to_rad(90))
-		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.SideGrind)
+func set_base_angle(angle):
+	if angle > 135 and angle < 225:
+		backside = true
+	
+	if $"..".x_input < -0.5 and $"..".y_input > -0.5 and $"..".y_input < 0.5:
+		base_angle = 90
+	elif $"..".x_input > 0.5 and $"..".y_input > -0.5 and $"..".y_input < 0.5:
+		base_angle = -90
 		
-	elif angle > 135 and angle < 225:
-		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
-		$"../../Models".rotate_y(deg_to_rad(180))
-		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.BackGrind)
-	elif angle > 225 and angle < 315:
-		$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir), Vector3.UP)
-		$"../../Models".rotate_y(deg_to_rad(-90))
-		$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.SideGrind)
+func trick_definition(angle):
+	var alignment_mod = -alignment
+	
+	if backside:
+		alignment_mod = alignment
+	
+	$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir * alignment_mod) , Vector3.UP)
+	$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.FrontGrind)
+	$"../../Models".rotate_y(deg_to_rad(base_angle))
+	#$"../../Models".rotate_z(1.0)
+	
 
 func update(delta: float):
+	$"../../Models".rotate_z(2.0 * delta)
+	
 	$"../..".base(delta, 100)
 	
 	if $"../../Ui".grind_curve.should_fall:

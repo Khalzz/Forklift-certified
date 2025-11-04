@@ -5,11 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://dsj460wan0f6t" path="res://Assets/Sprites/Gameplay/Grinds/GrindRect.svg" id="3_w1wbn"]
 [ext_resource type="PackedScene" uid="uid://cqdpx5a08j4w7" path="res://Assets/Prefabs/Grind/balancing_curve.tscn" id="4_rw8yf"]
 
-[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("state_label", "can_grind_label", "can_trick_label", "points", "combo_points", "combo_tricks", "combo_container", "grind_curve")]
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("state_label", "can_grind_label", "can_trick_label", "spin_count", "points", "combo_points", "combo_tricks", "combo_container", "grind_curve")]
 script = ExtResource("1_oyw1i")
 state_label = NodePath("Panel/MarginContainer/DebugLabels/State")
 can_grind_label = NodePath("Panel/MarginContainer/DebugLabels/CanGrind")
 can_trick_label = NodePath("Panel/MarginContainer/DebugLabels/CanTrick")
+spin_count = NodePath("Panel/MarginContainer/DebugLabels/SpinCount")
 points = NodePath("MarginContainer/DebugLabels/Points")
 combo_points = NodePath("ComboContainer/ComboBoxContainer/ComboPoints")
 combo_tricks = NodePath("ComboContainer/ComboBoxContainer/ComboTricks")
@@ -21,7 +22,7 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -141.0
-offset_bottom = 120.0
+offset_bottom = 143.0
 grow_horizontal = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
@@ -55,6 +56,10 @@ text = "Can Grind: True"
 [node name="CanTrick" type="Label" parent="Panel/MarginContainer/DebugLabels"]
 layout_mode = 2
 text = "Can Trick: True"
+
+[node name="SpinCount" type="Label" parent="Panel/MarginContainer/DebugLabels"]
+layout_mode = 2
+text = "Spin count: 0.0"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 offset_right = 121.0

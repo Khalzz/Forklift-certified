@@ -54,15 +54,15 @@ var x_input = Vector2.ZERO
 var y_input = Vector2.ZERO
 
 func air_tricks():
-	if (Input.is_action_just_pressed("flip") and Controller.l_stick.x < 0.0) or (Input.is_action_just_pressed("flip") and Controller.l_stick == Vector2(0.0, 0.0)):
+	if (Input.is_action_just_pressed("flip") and Controller.l_stick.x < -0.5) or (Input.is_action_just_pressed("flip") and Controller.l_stick == Vector2(0.0, 0.0)):
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.LeftFlip)
-	if Input.is_action_just_pressed("flip") and Controller.l_stick.x > 0.0:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.x > 0.5:
 		#$"../AnimationManager".play("right_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.RightFlip)
-	if Input.is_action_just_pressed("flip") and Controller.l_stick.y < 0.0:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.y < -0.5:
 		#$"../AnimationManager".play("back_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.BackFlip)
-	if Input.is_action_just_pressed("flip") and Controller.l_stick.y > 0.0:
+	if Input.is_action_just_pressed("flip") and Controller.l_stick.y > 0.5:
 		#$"../AnimationManager".play("front_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.FrontFlip)
 
