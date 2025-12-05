@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmvl2f74h5thy"]
+
+[ext_resource type="PackedScene" uid="uid://bsjiinyt7cdgf" path="res://Assets/Models/World/Obstacles/WetFloor/WetFloor.glb" id="1_kgg0f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ka36c"]
+size = Vector3(0.14789581, 0.37843323, 0.1487875)
+
+[node name="Cone" type="RigidBody3D"]
+mass = 0.2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1035156e-05, 0.18436441, 0.00011014938)
+shape = SubResource("BoxShape3D_ka36c")
+
+[node name="WetFloor" parent="." instance=ExtResource("1_kgg0f")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.004617095, -0.0003990382, -0.00025945902)

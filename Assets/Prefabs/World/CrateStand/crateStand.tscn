@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxfwakip25enn"]
+
+[ext_resource type="PackedScene" uid="uid://b38hvel8ybr7t" path="res://Assets/Models/World/Interactable/CratesStand/CratesStand.glb" id="1_prxk7"]
+[ext_resource type="Script" uid="uid://b1400a4x1bgk3" path="res://Assets/Scripts/Gameplay/crate_stand.gd" id="1_pwmug"]
+[ext_resource type="PackedScene" uid="uid://yjt6wy01d1vr" path="res://Assets/Prefabs/World/CrateStand/crateStandFloor.tscn" id="3_e38np"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eq5ac"]
+size = Vector3(0.50398934, 0.79553604, 0.2908911)
+
+[node name="CrateStand" type="RigidBody3D"]
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+mass = 20.0
+sleeping = true
+can_sleep = false
+lock_rotation = true
+freeze = true
+script = ExtResource("1_pwmug")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00049751997, 0.3978139, 0.0003137514)
+shape = SubResource("BoxShape3D_eq5ac")
+
+[node name="CratesStand" parent="." instance=ExtResource("1_prxk7")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.033960953, 0)
+
+[node name="FirstFloor" type="Node3D" parent="CratesStand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.008993238, 0)
+
+[node name="CrateStandFloor" parent="CratesStand/FirstFloor" instance=ExtResource("3_e38np")]
+
+[node name="SecondFloor" type="Node3D" parent="CratesStand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5309203, 0)
+
+[node name="CrateStandFloor" parent="CratesStand/SecondFloor" instance=ExtResource("3_e38np")]
+
+[node name="ThirdFloor" type="Node3D" parent="CratesStand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0899367, 0)
+
+[node name="CrateStandFloor" parent="CratesStand/ThirdFloor" instance=ExtResource("3_e38np")]

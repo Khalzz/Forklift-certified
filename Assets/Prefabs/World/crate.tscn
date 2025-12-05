@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b04w35eygdn4e"]
+
+[ext_resource type="PackedScene" uid="uid://wq87rubq610x" path="res://Assets/Models/World/Interactable/Crate/Crate.glb" id="1_h7oqa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eq5ac"]
+size = Vector3(0.20054817, 0.20020294, 0.19906211)
+
+[node name="Crate" type="Area3D"]
+
+[node name="Crate" parent="." instance=ExtResource("1_h7oqa")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00037288666, 0.10014734, 0.00052011013)
+shape = SubResource("BoxShape3D_eq5ac")

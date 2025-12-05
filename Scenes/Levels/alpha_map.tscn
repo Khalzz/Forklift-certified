@@ -1,11 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://dd78fa4cfb0e"]
+[gd_scene load_steps=23 format=3 uid="uid://dd78fa4cfb0e"]
 
 [ext_resource type="PackedScene" uid="uid://b8wm5aids0hsd" path="res://Assets/Prefabs/Player/player.tscn" id="1_jqrvn"]
-[ext_resource type="Texture2D" uid="uid://bemvhniy4n5e6" path="res://Assets/Materials/orange.png" id="2_hjps7"]
+[ext_resource type="Texture2D" uid="uid://gv2t4p6cslmj" path="res://Assets/Materials/texture_12.png" id="2_vu1er"]
 [ext_resource type="PackedScene" uid="uid://3n18bokpi40a" path="res://Assets/Prefabs/Grind/grind_path.tscn" id="4_fujv5"]
 [ext_resource type="PackedScene" uid="uid://d07s53qpchp40" path="res://Assets/Prefabs/World/cone.tscn" id="5_vu1er"]
+[ext_resource type="PackedScene" uid="uid://b04w35eygdn4e" path="res://Assets/Prefabs/World/crate.tscn" id="6_hjps7"]
 [ext_resource type="Texture2D" uid="uid://b24wme1o6ibod" path="res://Assets/Materials/purple.png" id="6_jqrvn"]
 [ext_resource type="PackedScene" uid="uid://b77wnb1fhkjmg" path="res://Assets/Models/World/Obstacles/Grind/Grind.glb" id="7_8wxs8"]
+[ext_resource type="PackedScene" uid="uid://cmvl2f74h5thy" path="res://Assets/Prefabs/World/WetFloorSign.tscn" id="10_fujv5"]
+[ext_resource type="PackedScene" uid="uid://vmf24hogjilf" path="res://Assets/Prefabs/World/WaterPuddle.glb" id="11_8wxs8"]
+[ext_resource type="PackedScene" uid="uid://dxfwakip25enn" path="res://Assets/Prefabs/World/CrateStand/crateStand.tscn" id="11_es42d"]
+[ext_resource type="PackedScene" uid="uid://cl7sdrjo52i43" path="res://Assets/Prefabs/World/character.tscn" id="11_vu1er"]
+[ext_resource type="Texture2D" uid="uid://bhvn37s4ixfef" path="res://Assets/Materials/tyreTrack.png" id="12_es42d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f2nln"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -21,11 +27,11 @@ sky = SubResource("Sky_efk68")
 tonemap_mode = 2
 fog_light_energy = 13.46
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efk68"]
-albedo_texture = ExtResource("2_hjps7")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_es42d"]
+albedo_color = Color(0.45064825, 0.4506483, 0.45064813, 1)
+albedo_texture = ExtResource("2_vu1er")
 uv1_triplanar = true
 uv1_world_triplanar = true
-texture_filter = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gxb1y"]
 
@@ -55,7 +61,7 @@ point_count = 8
 [node name="World" type="Node3D"]
 
 [node name="Player" parent="." instance=ExtResource("1_jqrvn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8545928, 0.312811, 5.1408925)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9427521, 0.312811, 15.725902)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_06fis")
@@ -73,7 +79,7 @@ transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
 
 [node name="FloorMesh" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.00050213514, 0.023306012, 0.00052027457)
-material_override = SubResource("StandardMaterial3D_efk68")
+material_override = SubResource("StandardMaterial3D_es42d")
 mesh = SubResource("PlaneMesh_gxb1y")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor/FloorMesh"]
@@ -164,5 +170,281 @@ curve = SubResource("Curve3D_jqrvn")
 tag = "Ejemplo?"
 loop = true
 
+[node name="Crate" parent="Boxes" instance=ExtResource("6_hjps7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5289543, 0.022041721, 4.0903482)
+
 [node name="Grind" parent="." instance=ExtResource("7_8wxs8")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.1315153, -0.00035478565, 3.1823034)
+
+[node name="Character" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_vu1er")]
+transform = Transform3D(0.018766824, 0, 0, 0, 0.018766824, 0, 0, 0, 0.018766824, -2.6828866, 0.32680288, 5.078755)
+texture_filter = 2
+player = NodePath("../Player")
+
+[node name="GeneralStands" type="Node3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.3076842, 0.056441218, 4.878811)
+
+[node name="Stands" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.3076842)
+
+[node name="CrateStand" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands2" type="Node3D" parent="GeneralStands"]
+
+[node name="CrateStand" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands2" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands3" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5999999, 0, -2.3076842)
+
+[node name="CrateStand" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands3" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands4" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5999999, 0, 0)
+
+[node name="CrateStand" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands4" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands5" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1812487, 0, -2.3076842)
+
+[node name="CrateStand" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands5" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands6" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1812487, 0, 0)
+
+[node name="CrateStand" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands6" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands7" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -2.3076844)
+
+[node name="CrateStand" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands7" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands8" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6, 0, -2.3076844)
+
+[node name="CrateStand" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands8" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands9" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.181249, 0, -2.3076844)
+
+[node name="CrateStand" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands9" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands10" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -0.007684469)
+
+[node name="CrateStand" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands10" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands11" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.6, 0, -0.007684469)
+
+[node name="CrateStand" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands11" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Stands12" type="Node3D" parent="GeneralStands"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.181249, 0, -0.007684231)
+
+[node name="CrateStand" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.53530675)
+
+[node name="CrateStand2" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.5353068)
+
+[node name="CrateStand3" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.53530675)
+
+[node name="CrateStand4" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09192371, -0.034399495, 0.84791476)
+
+[node name="CrateStand5" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43140364, -0.034399495, 0.8479149)
+
+[node name="CrateStand6" parent="GeneralStands/Stands12" instance=ExtResource("11_es42d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6121726, -0.034399495, 0.84791476)
+
+[node name="Cone" parent="GeneralStands" instance=ExtResource("10_fujv5")]
+transform = Transform3D(-0.9856506, 0, -0.16879903, 0, 1, 0, 0.16879903, 0, -0.9856506, -2.2874765, -0.034000576, -0.73097134)
+
+[node name="Cone2" parent="GeneralStands" instance=ExtResource("10_fujv5")]
+transform = Transform3D(0.87027836, 0, -0.49256033, 0, 1, 0, 0.49256033, 0, 0.87027836, -1.3728418, -0.034000576, -0.7719481)
+
+[node name="WaterPuddle" parent="." instance=ExtResource("11_8wxs8")]
+transform = Transform3D(0.22822201, 0, 0, 0, 0.22822201, 0, 0, 0, 0.22822201, 1.5389895, 0.028312765, 6.728381)
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3665757, 0.026519299, 15.510649)
+size = Vector3(0.1, 1, 0.1)
+texture_albedo = ExtResource("12_es42d")

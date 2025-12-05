@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl7sdrjo52i43"]
+
+[ext_resource type="Texture2D" uid="uid://cvgrmon1mxn06" path="res://Assets/Sprites/Characters/Accountant.png" id="1_xyp1q"]
+[ext_resource type="Script" uid="uid://dhbclvlxwealh" path="res://Assets/Scripts/character.gd" id="2_2xy25"]
+
+[node name="Character" type="Sprite3D"]
+transform = Transform3D(0.010473394, 0, 0, 0, 0.010473394, 0, 0, 0, 0.010473394, 0, 0, 0)
+texture = ExtResource("1_xyp1q")
+script = ExtResource("2_2xy25")

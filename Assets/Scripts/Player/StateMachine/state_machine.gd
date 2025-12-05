@@ -66,7 +66,10 @@ func air_tricks():
 		#$"../AnimationManager".play("front_flip")
 		$"../TrickManager".set_trick($"../TrickManager".TricksEnum.FrontFlip)
 
+var count = 0.0
+
 func _process(delta: float) -> void:
+	count += delta
 	x_input = Controller.l_stick.x
 	y_input = -Controller.l_stick.y
 	xr_input = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)

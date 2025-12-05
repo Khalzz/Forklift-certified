@@ -1,10 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1qpd0dy7vem6"]
+[gd_scene load_steps=17 format=3 uid="uid://b1qpd0dy7vem6"]
 
 [ext_resource type="PackedScene" uid="uid://rnlbjyt78edc" path="res://Assets/Models/forklift.glb" id="1_853f1"]
 [ext_resource type="Script" uid="uid://cao4n7awhq1g5" path="res://Scenes/main_menu.gd" id="1_df05h"]
 [ext_resource type="Texture2D" uid="uid://bemvhniy4n5e6" path="res://Assets/Materials/orange.png" id="2_8saeu"]
 [ext_resource type="PackedScene" uid="uid://b8jh63vm3tr0h" path="res://Assets/Prefabs/blocks/box.tscn" id="2_8um5k"]
 [ext_resource type="PackedScene" uid="uid://j8r2xo6jof" path="res://Assets/Prefabs/blocks/grindable.tscn" id="5_xim88"]
+[ext_resource type="PackedScene" uid="uid://wq87rubq610x" path="res://Assets/Models/World/Interactable/Crate/Crate.glb" id="6_xim88"]
+[ext_resource type="PackedScene" uid="uid://d07s53qpchp40" path="res://Assets/Prefabs/World/cone.tscn" id="7_koqhg"]
+[ext_resource type="PackedScene" uid="uid://b38hvel8ybr7t" path="res://Assets/Models/World/Interactable/CratesStand/CratesStand.glb" id="8_koqhg"]
+[ext_resource type="PackedScene" uid="uid://djwok5im8heai" path="res://Assets/Prefabs/World/crateDouble.tscn" id="9_cmrfp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghw46"]
 albedo_texture = ExtResource("2_8saeu")
@@ -63,7 +67,7 @@ transform = Transform3D(0.059236713, 0, -0.998244, 0, 1, 0, 0.998244, 0, 0.05923
 transform = Transform3D(0.05923671, 0.1347522, 0.989107, 0, 0.99084705, -0.13498926, -0.99824387, 0.00799632, 0.05869452, 0.7560923, 0.095282435, 0.06352769)
 
 [node name="PlayText" type="Label3D" parent="Play"]
-transform = Transform3D(-0.3061771, 0, 0.9519745, 0, 1, 0, -0.9519745, 0, -0.3061771, -0.4025932, 0.46466243, 0.2764679)
+transform = Transform3D(-0.30617708, 0, 0.95197445, 0, 1, 0, -0.95197445, 0, -0.30617708, -0.34448338, 0.46466243, 0.27991617)
 text = "Play"
 font_size = 100
 outline_size = 2
@@ -116,3 +120,39 @@ directional_shadow_max_distance = 91.3
 [node name="ActiveCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.31434506, 0)
 current = true
+
+[node name="Cone" parent="." instance=ExtResource("7_koqhg")]
+transform = Transform3D(0.6511849, 0, -0.7589191, 0, 1, 0, 0.7589191, 0, 0.6511849, -0.22911406, 0.02186434, -1.1724253)
+
+[node name="Cone2" parent="." instance=ExtResource("7_koqhg")]
+transform = Transform3D(0.98359036, 0, 0.18041614, 0, 1, 0, -0.18041614, 0, 0.98359036, -0.5260494, 0.02186434, -1.4498742)
+
+[node name="CratesStand" parent="." instance=ExtResource("8_koqhg")]
+transform = Transform3D(0.09286736, 0, -0.037089784, 0, 0.099999994, 0, 0.037089784, 0, 0.09286736, 0.22224402, 0.034472138, -1.9589086)
+
+[node name="Crate" parent="CratesStand" instance=ExtResource("6_xim88")]
+transform = Transform3D(0.8853484, 0, 0.004048556, 0, 0.88535756, 0, -0.004048556, 0, 0.8853484, -1.3353705, -0.0040329397, 0.105098724)
+
+[node name="Crate2" parent="CratesStand" instance=ExtResource("6_xim88")]
+transform = Transform3D(0.86615807, 0, -0.18338084, 0, 0.8853574, 0, 0.18338084, 0, 0.86615807, 0.8745549, -0.0040329397, 0.098602295)
+
+[node name="Crate3" parent="CratesStand" instance=ExtResource("9_cmrfp")]
+transform = Transform3D(0.21361303, 0, 9.997712, 0, 9.999991, 0, -9.997712, 0, 0.21361303, 0.08451939, 2.4976776, 0.14156151)
+
+[node name="Crate4" parent="CratesStand" instance=ExtResource("9_cmrfp")]
+transform = Transform3D(1.1486781, 0, 9.933802, 0, 9.999989, 0, -9.933802, 0, 1.1486781, 0.08451939, 5.060406, 0.14156151)
+
+[node name="CratesStand2" parent="." instance=ExtResource("8_koqhg")]
+transform = Transform3D(0.08635013, 0, 0.050434683, 0, 0.10000001, 0, -0.050434683, 0, 0.08635013, -0.43247372, 0.034472138, -1.9202015)
+
+[node name="Crate" parent="CratesStand2" instance=ExtResource("6_xim88")]
+transform = Transform3D(0.8853484, 0, 0.004048556, 0, 0.88535756, 0, -0.004048556, 0, 0.8853484, -1.3353705, -0.0040329397, 0.105098724)
+
+[node name="Crate2" parent="CratesStand2" instance=ExtResource("6_xim88")]
+transform = Transform3D(0.86615807, 0, -0.18338084, 0, 0.8853574, 0, 0.18338084, 0, 0.86615807, 0.8745549, -0.0040329397, 0.098602295)
+
+[node name="Crate3" parent="CratesStand2" instance=ExtResource("9_cmrfp")]
+transform = Transform3D(0.21361303, 0, 9.997712, 0, 9.999991, 0, -9.997712, 0, 0.21361303, 0.08451939, 2.4976776, 0.14156151)
+
+[node name="Crate4" parent="CratesStand2" instance=ExtResource("9_cmrfp")]
+transform = Transform3D(1.1486781, 0, 9.933802, 0, 9.999989, 0, -9.933802, 0, 1.1486781, 0.08451939, 5.060406, 0.14156151)

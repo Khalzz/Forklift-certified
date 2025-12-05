@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://yjt6wy01d1vr"]
+
+[ext_resource type="Script" uid="uid://b72frb0jjjmqg" path="res://Assets/Scripts/Gameplay/crate_stand_floor.gd" id="1_vif0v"]
+[ext_resource type="PackedScene" uid="uid://b04w35eygdn4e" path="res://Assets/Prefabs/World/crate.tscn" id="3_wap08"]
+[ext_resource type="PackedScene" uid="uid://djwok5im8heai" path="res://Assets/Prefabs/World/crateDouble.tscn" id="4_2gpsd"]
+
+[node name="CrateStandFloor" type="Node3D"]
+transform = Transform3D(-4.371139e-07, 0, 10, 0, 10, 0, -10, 0, -4.371139e-07, 0, 0, 0)
+script = ExtResource("1_vif0v")
+
+[node name="MultipleCrate" type="Node3D" parent="."]
+visible = false
+
+[node name="Crate_1" parent="MultipleCrate" instance=ExtResource("3_wap08")]
+transform = Transform3D(0.98768836, 0, -0.15643448, 0, 1, 0, 0.15643448, 0, 0.98768836, 0, 0, 0.115)
+
+[node name="Crate_2" parent="MultipleCrate" instance=ExtResource("3_wap08")]
+transform = Transform3D(0.98768836, 0, 0.15643448, 0, 1, 0, -0.15643448, 0, 0.98768836, 0, 0, -0.115)
+
+[node name="SingleCrate" type="Node3D" parent="."]
+
+[node name="Crate" parent="SingleCrate" instance=ExtResource("4_2gpsd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0022482798, 0)
