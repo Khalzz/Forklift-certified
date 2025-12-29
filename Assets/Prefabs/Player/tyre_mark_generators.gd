@@ -10,9 +10,9 @@ func _physics_process(delta: float) -> void:
 	# Check if drifting (angle between forward direction and velocity)
 	var angle_to_forward = rb.transform.basis.z.angle_to(velocity.normalized())
 	
-	if angle_to_forward > 0.5 and $"../../StateMachine".is_touching_ground() and velocity.length() > 1.0:
+	if angle_to_forward > 0.35 and $"../../StateMachine".is_touching_ground() and velocity.length() > 1.0:
 		$TyreMarkGeneratorRr.spawnMark(true)
 		$TyreMarkGeneratorRl.spawnMark(true)
 	else:
 		$TyreMarkGeneratorRr.spawnMark(false)
-		$TyreMarkGeneratorRl.spawnMark(false)
+		$TyreMarkGeneratorRl.spawnMark(false) 

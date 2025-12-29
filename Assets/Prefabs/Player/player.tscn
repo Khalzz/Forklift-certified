@@ -514,7 +514,7 @@ script = ExtResource("14_47ure")
 script = ExtResource("14_uijvq")
 
 [node name="Models" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.007867165, 0)
 
 [node name="Sparks" type="Node3D" parent="Models"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028274, -0.118351)
@@ -529,14 +529,23 @@ transform = Transform3D(-0.012941, 0, 0.0482963, 0, 0.05, 0, -0.0482963, 0, -0.0
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 
 [node name="tyreMarkGenerators" type="Node3D" parent="Models"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012905762, 0)
 script = ExtResource("16_kct70")
 
 [node name="TyreMarkGeneratorRr" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("16_47ure")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.087389335, 0, -0.119848385)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.087389335, 0.0031468794, -0.10096721)
 rigidbody = NodePath("../../../RigidBody")
 
 [node name="TyreMarkGeneratorRl" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("16_47ure")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 0, -0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, 0.0031468794, -0.101118825)
+rigidbody = NodePath("../../../RigidBody")
+
+[node name="TyreMarkGeneratorFr" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("16_47ure")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.104, 0.007428147, 0.08)
+rigidbody = NodePath("../../../RigidBody")
+
+[node name="TyreMarkGeneratorFl" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("16_47ure")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10364561, 0.007428147, 0.08)
 rigidbody = NodePath("../../../RigidBody")
 
 [node name="AnimationManager" type="AnimationPlayer" parent="."]
