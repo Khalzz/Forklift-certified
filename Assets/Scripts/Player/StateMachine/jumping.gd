@@ -1,5 +1,7 @@
 extends State
 
+@export var models: Node3D
+
 var jump_strength = 3.5
 var jumping = false
 
@@ -30,10 +32,10 @@ func update(delta):
 		if jump_timer > max_jump_time:
 			can_check_ground = true
 	
-	$"../..".stretch(delta, 50)
+	models.stretch(delta, 50)
 	
 	if get_parent().is_touching_ground() and can_check_ground:
-		$"../..".squash(delta, 150)
+		models.squash(delta, 150)
 		get_parent().change_state(get_parent().States.Running)
 
 func fixed_update(delta):

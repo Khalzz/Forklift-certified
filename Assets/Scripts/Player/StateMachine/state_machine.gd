@@ -1,18 +1,18 @@
 extends Node
 
-@export var base_player: Node3D
-
+# General compontents
 @export var ground_rays: Node3D
 @export var rigid_body: RigidBody3D
+@export var models: Node3D
+@export var ui: CanvasLayer
 
+# States
 @export var idle_node: Node
 @export var jumping_node: Node
 @export var running_node: Node
 @export var falling_node: Node
 @export var grinding_node: Node
 @export var failing_node: Node
-
-@export var direction_arrow: Node
 
 var floor_normals = null
 
@@ -86,18 +86,17 @@ func _process(delta: float) -> void:
 	if is_touching_ground() and danger_state:
 		change_state(States.Failing)
 	
-	var grindables = $Grinding.get_grindables()
+	var grindables = grinding_node.get_grindables()
 	
 	if Array(grindables).size() > 0 and grindable_states.has(state) and !danger_state:
-		$Grinding.actionable_grind = $Grinding.get_closest_grind(grindables)
+		grinding_node.actionable_grind = grinding_node.get_closest_grind(grindables)
 		
-		if $Grinding.actionable_grind:
-			var local_position = $Grinding.actionable_grind.to_local(rigid_body.global_position)
-			var offset = $Grinding.actionable_grind.curve.get_closest_offset(local_position)
-			$Grinding.actionable_grind.path_follower.progress = offset
+		if grinding_node.actionable_grind:
+			var local_position = grinding_node.actionable_grind.to_local(rigid_body.global_position)
+			var offset = grinding_node.actionable_grind.curve.get_closest_offset(local_position)
+			grinding_node.actionable_grind.path_follower.progress = offset
 			
-			$"../GrindAble".global_position = $Grinding.actionable_grind.path_follower.global_position
-			if Input.is_action_just_pressed("grind") and $Grinding.actionable_grind:
+			if Input.is_action_just_pressed("grind") and grinding_node.actionable_grind:
 				change_state(States.Grinding)
 
 func is_point_inside_capsule(point: Vector3, collision_shape: CollisionShape3D) -> bool:
@@ -128,15 +127,14 @@ func _physics_process(delta: float) -> void:
 	var move_dir = rigid_body.linear_velocity.normalized()
 	
 	if not static_states.has(state):
-		$"../Models".global_position = $"../RigidBody".global_position
-		$"../Models".global_rotation = $"../RigidBody".global_rotation
+		models.global_position = rigid_body.global_position
+		models.global_rotation = rigid_body.global_rotation
 	
 	# var arrow_position = rigid_body.global_transform.origin + move_dir * 1.0
 	# direction_arrow.position.x = arrow_position.x
 	# direction_arrow.position.z = arrow_position.z
 	
 	var angle = atan2(move_dir.x, move_dir.z)
-	direction_arrow.rotation.y = angle
 	
 	stateElements[state].fixed_update(delta)
 
@@ -150,7 +148,7 @@ func is_touching_ground() -> bool:
 	return touching_ground
 
 func change_state(new_state):
-	get_parent().ui.state_label.set_text("State: " + stateElements[new_state].name)
+	ui.state_label.set_text("State: " + stateElements[new_state].name)
 	stateElements[new_state].start()
 	state = new_state
 	

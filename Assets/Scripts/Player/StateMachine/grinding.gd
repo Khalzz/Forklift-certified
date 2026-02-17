@@ -9,7 +9,7 @@ var global_path_dir = Vector3.ZERO
 
 var base_speed = 0.0
 
-@export var rigidbody: RigidBody3D
+@export var rigid_body: RigidBody3D
 @export var line_grind: MeshInstance3D
 
 var grind_check_radius = 5.0
@@ -30,7 +30,6 @@ var base_angle = 0.0
 var backside = false
 
 func _ready() -> void:
-	rigidbody = $"../../RigidBody"
 	$"../../Ui".grind_curve.stop_grind()
 
 func start():
@@ -81,9 +80,9 @@ func start():
 	arrow.global_transform.origin = path_follower.global_transform.origin
 	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.UP)
 	
-	rigidbody.freeze = true
-	initial_velocity = rigidbody.linear_velocity
-	rigidbody.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	rigid_body.freeze = true
+	initial_velocity = rigid_body.linear_velocity
+	rigid_body.linear_velocity = Vector3(0.0, 0.0, 0.0)
 	
 	$"../../RigidBody/CollisionShape3D".disabled = true
 	$"../../RigidBody/GroundRays".checking_floor(false)
@@ -131,7 +130,7 @@ func update(delta: float):
 	
 	# Set positioning
 	$"../../Models".global_position = path_follower.global_position
-	rigidbody.linear_velocity.y = 0.0
+	rigid_body.linear_velocity.y = 0.0
 	
 	# Check if the grind ends, or the player jumps
 	if Input.is_action_pressed("jump"): 
@@ -144,7 +143,7 @@ func update(delta: float):
 
 func set_base_speed():
 	# Get the actual horizontal speed magnitude
-	var horizontal_velocity = Vector3(rigidbody.linear_velocity.x, 0, rigidbody.linear_velocity.z)
+	var horizontal_velocity = Vector3(rigid_body.linear_velocity.x, 0, rigid_body.linear_velocity.z)
 	var horizontal_speed = horizontal_velocity.length()
 	
 	# Store as absolute value - alignment handles direction in move()
@@ -172,16 +171,15 @@ func move(delta):
 	var velocity = path_dir * horizontal_speed
 	velocity.y = 0
 
-	rigidbody.linear_velocity = velocity
+	rigid_body.linear_velocity = velocity
 
 func end_grind():
-	$"../../Models/Sparks".visible = false
-	rigidbody.global_position = $"../../Models".global_position
-	rigidbody.global_rotation = $"../../Models".global_rotation
-	rigidbody.freeze = false
+	rigid_body.global_position = $"../../Models".global_position
+	rigid_body.global_rotation = $"../../Models".global_rotation
+	rigid_body.freeze = false
 	$"../../RigidBody/CollisionShape3D".disabled = false
 	$"../../RigidBody/GroundRays".checking_floor(true)
-	$"../../CameraSubsystem".set_followable(rigidbody)
+	$"../../CameraSubsystem".set_followable(rigid_body)
 	$"../../Ui".grind_curve.stop_grind()
 
 func check_fall():
@@ -196,17 +194,19 @@ func get_grindables():
 	var grindables = get_tree().get_nodes_in_group("grindable")
 	var grind_areas = []
 	
-	debug($"../../RigidBody", grindables)
+	#debug($"../../RigidBody", grindables)
+	print(grindables)
 	
 	for grindable in grindables:
-		var distance_to_element = grindable.path_follower.global_position.distance_to($"../../RigidBody".global_position)
-		
+		var distance_to_element = grindable.path_follower.global_position.distance_to(rigid_body.global_position)
 		# This should be between the grindable point and the player, not between the grindable OBJECT and player
 		# if distance_to_element <= grind_check_radius:
 		grind_areas.append(grindable)
 	
 	return grind_areas
 
+
+"""
 func debug(rigidbody, grindables):
 	var display = false
 	
@@ -214,6 +214,7 @@ func debug(rigidbody, grindables):
 		line_grind.mesh.clear_surfaces()
 		line_grind.mesh.surface_begin(Mesh.PRIMITIVE_LINES)
 		for grindable in grindables:
+			print(grindable)
 			var distance_to_element = grindable.path_follower.global_position.distance_to(rigidbody.global_position)
 			if distance_to_element <= grind_check_radius:
 				display = true
@@ -222,17 +223,18 @@ func debug(rigidbody, grindables):
 	
 		if display:
 			line_grind.mesh.surface_end()
+"""
 
 func get_closest_grind(grindables):
 	var distance_flag = null
 	var selected_grind = null
 	
 	for grindable in grindables:
-		var local_position = grindable.to_local($"../../RigidBody".global_position)
+		var local_position = grindable.to_local(rigid_body.global_position)
 		var offset = grindable.curve.get_closest_offset(local_position)
 		grindable.path_follower.progress = offset
 		
-		var distance_to_element = grindable.path_follower.global_position.distance_to($"../../RigidBody".global_position)
+		var distance_to_element = grindable.path_follower.global_position.distance_to(rigid_body.global_position)
 		
 		if distance_flag == null or distance_to_element < distance_flag:
 			distance_flag = distance_to_element
@@ -252,7 +254,7 @@ func set_alignment():
 		actionable_grind.path_follower.progress, 
 	).normalized()
 	
-	var player_direction: Vector3 = rigidbody.linear_velocity
+	var player_direction: Vector3 = rigid_body.linear_velocity
 	
 	var player_direction_normalized = player_direction.normalized()
 	var dot_result = path_direction.dot(player_direction_normalized)

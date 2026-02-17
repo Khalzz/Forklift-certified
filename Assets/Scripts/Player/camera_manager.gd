@@ -82,6 +82,7 @@ func fixed_follow() -> void:
 	cameras_setter.global_position = followable.global_position
 	cameras_setter.global_transform.basis = followable.global_transform.basis
 
+# IT SHOULD FOLLOW THE AVERAGE MOVEMENT WHERE THE OBJECT IS MOVING WITH A SMALL LERP, SO WHEN I MAKE THE OBKECT DO ZIG ZAGS THE CAMERA DOES NOT JUMPS INSTANTLY AND WEIRDLY
 func follow_direction(use_rigidbody: bool, delta: float) -> void:
 	var current_position = followable.global_position
 	

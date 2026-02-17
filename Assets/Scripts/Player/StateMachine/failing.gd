@@ -13,7 +13,6 @@ func _ready() -> void:
 func start():
 	animation_player.play("failing")
 	$"../../TrickManager".set_trick(-1)
-	$"../../Models/Sparks".visible = false
 	$"..".danger_state = false
 	rigid_body = $"../../RigidBody"
 	var velocity = rigid_body.linear_velocity  # Get current velocity vector
