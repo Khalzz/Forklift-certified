@@ -17,3 +17,4 @@ func _init() -> void:
 	
 func _process(delta: float) -> void:
 	l_stick = Vector2(Input.get_axis("left", "right"), Input.get_axis("backward", "forward"))
+	r_stick = Vector2(Input.get_axis("r_left", "r_right"), Input.get_axis("r_down", "r_up"))

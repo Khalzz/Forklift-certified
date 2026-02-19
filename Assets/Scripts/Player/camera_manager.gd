@@ -85,33 +85,29 @@ func fixed_follow() -> void:
 # IT SHOULD FOLLOW THE AVERAGE MOVEMENT WHERE THE OBJECT IS MOVING WITH A SMALL LERP, SO WHEN I MAKE THE OBKECT DO ZIG ZAGS THE CAMERA DOES NOT JUMPS INSTANTLY AND WEIRDLY
 func follow_direction(use_rigidbody: bool, delta: float) -> void:
 	var current_position = followable.global_position
-	
+	var target_direction := last_direction  # default to current if no movement
+
 	if use_rigidbody and followable is RigidBody3D:
 		var velocity: Vector3 = followable.linear_velocity
 		velocity.y = 0.0
-		
 		if velocity.length() > movement_threshold:
-			last_direction = velocity.normalized()
+			target_direction = velocity.normalized()
 	else:
-		# Calculate movement from last frame
 		var movement: Vector3 = current_position - last_position
 		movement.y = 0.0
-		
-		# Use delta time to get proper speed threshold
 		var speed = movement.length() / delta if delta > 0 else 0
-		
 		if speed > movement_threshold:
-			last_direction = movement.normalized()
-	
-	# Update last_position for next frame
+			target_direction = movement.normalized()
+
 	last_position = current_position
-	
-	# Create a basis from the movement direction
+
+	# Smoothly rotate toward the target direction instead of snapping
+	last_direction = last_direction.slerp(target_direction, delta * 5.0).normalized()
+
 	var basis = Basis()
-	basis.z = last_direction  # Negative Z points forward
+	basis.z = last_direction
 	basis.x = basis.z.cross(Vector3.UP).normalized()
-	basis.y = basis.x.cross(basis.z).normalized()  # Recalculate Y for orthogonality
-	
-	# Apply rotation and position
+	basis.y = basis.x.cross(basis.z).normalized()
+
 	cameras_setter.global_transform.basis = basis
 	cameras_setter.global_position = current_position

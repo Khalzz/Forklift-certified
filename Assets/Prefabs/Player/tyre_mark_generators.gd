@@ -13,6 +13,10 @@ func _physics_process(delta: float) -> void:
 	if angle_to_forward > 0.35 and $"../../StateMachine".is_touching_ground() and velocity.length() > 1.0:
 		$TyreMarkGeneratorRr.spawnMark(true)
 		$TyreMarkGeneratorRl.spawnMark(true)
+		# $TyreMarkGeneratorFl.spawnMark(true)
+		# $TyreMarkGeneratorFr.spawnMark(true)
 	else:
 		$TyreMarkGeneratorRr.spawnMark(false)
-		$TyreMarkGeneratorRl.spawnMark(false) 
+		$TyreMarkGeneratorRl.spawnMark(false)
+		# $TyreMarkGeneratorFr.spawnMark(false)
+		# $TyreMarkGeneratorFl.spawnMark(false) 

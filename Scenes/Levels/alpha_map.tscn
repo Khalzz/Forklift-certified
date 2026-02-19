@@ -167,6 +167,10 @@ curve = SubResource("Curve3D_jqrvn")
 tag = "Ejemplo?"
 loop = true
 
+[node name="CSGBox3D" type="CSGBox3D" parent="Boxes/MapBlocks/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 0.92962223, -0.36851397, 0, 0.36851397, 0.92962223, -2.1689453, 0.23837852, -5.9029684)
+size = Vector3(5.3378906, 0.30126953, 3.8520508)
+
 [node name="Crate" parent="Boxes" instance=ExtResource("6_hjps7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5289543, 0.022041721, 4.0903482)
 

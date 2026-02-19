@@ -78,7 +78,7 @@ func start():
 	
 	var arrow = $"../../Direction"
 	arrow.global_transform.origin = path_follower.global_transform.origin
-	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.UP)
+	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.FORWARD)
 	
 	rigid_body.freeze = true
 	initial_velocity = rigid_body.linear_velocity
@@ -195,8 +195,6 @@ func get_grindables():
 	var grind_areas = []
 	
 	#debug($"../../RigidBody", grindables)
-	print(grindables)
-	
 	for grindable in grindables:
 		var distance_to_element = grindable.path_follower.global_position.distance_to(rigid_body.global_position)
 		# This should be between the grindable point and the player, not between the grindable OBJECT and player

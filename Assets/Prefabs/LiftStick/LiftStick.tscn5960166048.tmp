@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmh2hnycylwoa"]
+
+[ext_resource type="Texture2D" uid="uid://c3rypa1cmxe73" path="res://Assets/Sprites/ShifterStick.svg" id="1_8vbwb"]
+[ext_resource type="Script" uid="uid://cuirmaiotnue1" path="res://Assets/Prefabs/LiftStick/Scripts/shifter_steps.gd" id="2_3gc0u"]
+[ext_resource type="Script" uid="uid://bigbrt2eti17f" path="res://Assets/Prefabs/LiftStick/Scripts/step.gd" id="3_0snfs"]
+
+[node name="Node" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LiftStick" type="Sprite2D" parent="."]
+position = Vector2(978, 543)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_8vbwb")
+
+[node name="LiftSteps" type="Node2D" parent="." node_paths=PackedStringArray("shifter_stick")]
+position = Vector2(976, 539)
+script = ExtResource("2_3gc0u")
+shifter_stick = NodePath("../LiftStick")
+
+[node name="Step" type="Node2D" parent="LiftSteps" node_paths=PackedStringArray("bottom")]
+script = ExtResource("3_0snfs")
+bottom = NodePath("../Step2")
+
+[node name="Step2" type="Node2D" parent="LiftSteps" node_paths=PackedStringArray("right", "top")]
+position = Vector2(0, 100)
+script = ExtResource("3_0snfs")
+right = NodePath("../Step3")
+top = NodePath("../Step")
+
+[node name="Step3" type="Node2D" parent="LiftSteps" node_paths=PackedStringArray("left", "bottom")]
+position = Vector2(100, 100)
+script = ExtResource("3_0snfs")
+left = NodePath("../Step2")
+bottom = NodePath("../Step4")
+
+[node name="Step4" type="Node2D" parent="LiftSteps" node_paths=PackedStringArray("top")]
+position = Vector2(100, 200)
+script = ExtResource("3_0snfs")
+top = NodePath("../Step3")

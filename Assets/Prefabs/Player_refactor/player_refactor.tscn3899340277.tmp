@@ -421,6 +421,7 @@ script = ExtResource("1_x376u")
 player_model = NodePath("Models/forklift")
 player_direction = NodePath("Debug/Directional/MovementDirection")
 model_orientation = NodePath("Debug/Directional/PlayerOrientation")
+offset_distance = 0.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00645447, 0.13503218, -0.011139)
@@ -557,16 +558,15 @@ mesh = SubResource("ImmediateMesh_qd3ub")
 skeleton = NodePath("../..")
 
 [node name="Directional" type="Node3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10110474, 0)
 
 [node name="MovementDirection" type="Sprite3D" parent="Debug/Directional"]
-transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -0.1, 0, 0.1, -4.371139e-09, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0.1, 0.5)
 modulate = Color(0.46666667, 1, 0.4745098, 1)
 texture_filter = 0
 texture = ExtResource("18_hchy4")
 
 [node name="PlayerOrientation" type="Sprite3D" parent="Debug/Directional"]
-transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0.1, 0.5)
 modulate = Color(1, 0.4862745, 1, 1)
 texture_filter = 0
 texture = ExtResource("18_hchy4")

@@ -2,7 +2,7 @@ extends State
 
 @export var models: Node3D
 
-var jump_strength = 3.5
+var jump_strength = 5.0
 var jumping = false
 
 var can_check_ground = true
@@ -42,8 +42,6 @@ func fixed_update(delta):
 	if not jumping:
 		jumping = true
 		can_check_ground = false
-	
-	get_parent().rigid_body.apply_force(get_parent().rigid_body.linear_velocity.normalized() * 5.0)
 	
 	if (get_parent().x_input > 0.5 or get_parent().x_input < -0.5):
 		direction_count += delta
