@@ -11,6 +11,11 @@ var base_speed = 0.0
 
 @export var rigid_body: RigidBody3D
 @export var line_grind: MeshInstance3D
+@export var collision_shape: CollisionShape3D
+@export var ground_rays: Node3D
+@export var camera_subsystem: Node3D
+@export var models: Node3D
+@export var grindable_debug: Node3D
 
 var grind_check_radius = 5.0
 
@@ -49,7 +54,7 @@ func start():
 	set_alignment()
 	set_base_speed()
 	
-	var player_dir: Vector3 = Vector3.FORWARD.rotated(Vector3.UP, $"../../Models".global_rotation.y)
+	var player_dir: Vector3 = Vector3.FORWARD.rotated(Vector3.UP, rigid_body.global_rotation.y)
 	
 	global_path_dir = actionable_grind.path_follower.get_path_direction(
 		actionable_grind.curve,
@@ -72,21 +77,19 @@ func start():
 		grind_angle = bearing
 		
 		var direction = global_path_dir.normalized()
-		var target_position = $"../../Models".global_transform.origin + direction
+		var target_position = models.global_transform.origin + direction
 	
 	$"../../Ui".grind_curve.start_grind(true)
 	
-	var arrow = $"../../Direction"
-	arrow.global_transform.origin = path_follower.global_transform.origin
-	arrow.look_at(path_follower.global_transform.origin + global_path_dir, Vector3.FORWARD)
-	
 	rigid_body.freeze = true
 	initial_velocity = rigid_body.linear_velocity
-	rigid_body.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	#rigid_body.linear_velocity = Vector3(0.0, 0.0, 0.0)
+	print("Starting grind")
+	print(rigid_body.linear_velocity)
 	
-	$"../../RigidBody/CollisionShape3D".disabled = true
-	$"../../RigidBody/GroundRays".checking_floor(false)
-	$"../../CameraSubsystem".set_followable($"../../Models")
+	collision_shape.disabled = true
+	ground_rays.checking_floor(false)
+	camera_subsystem.set_followable(rigid_body, false)
 	
 	set_base_angle(grind_angle)
 
@@ -94,9 +97,9 @@ func set_base_angle(angle):
 	if angle > 135 and angle < 225:
 		backside = true
 	
-	if $"..".x_input < -0.5 and $"..".y_input > -0.5 and $"..".y_input < 0.5:
+	if Controller.l_stick.x < -0.5 and Controller.l_stick.y > -0.5 and Controller.l_stick.y < 0.5:
 		base_angle = 90
-	elif $"..".x_input > 0.5 and $"..".y_input > -0.5 and $"..".y_input < 0.5:
+	elif Controller.l_stick.x > 0.5 and Controller.l_stick.y > -0.5 and Controller.l_stick.y < 0.5:
 		base_angle = -90
 		
 func trick_definition(angle):
@@ -105,16 +108,16 @@ func trick_definition(angle):
 	if backside:
 		alignment_mod = alignment
 	
-	$"../../Models".look_at(($"../../Models".global_transform.origin + global_path_dir * alignment_mod) , Vector3.UP)
+	rigid_body.look_at((models.global_transform.origin + global_path_dir * alignment_mod) , Vector3.UP)
 	$"../../TrickManager".set_trick($"../../TrickManager".TricksEnum.FrontGrind)
-	$"../../Models".rotate_y(deg_to_rad(base_angle))
+	rigid_body.rotate_y(deg_to_rad(base_angle))
 	#$"../../Models".rotate_z(1.0)
 	
 
 func update(delta: float):
-	$"../../Models".rotate_z(2.0 * delta)
+	# models.rotate_z(2.0 * delta)
 	
-	$"../..".base(delta, 100)
+	models.base(delta, 100)
 	
 	if $"../../Ui".grind_curve.should_fall:
 		end_grind()
@@ -129,12 +132,12 @@ func update(delta: float):
 	trick_definition(grind_angle)
 	
 	# Set positioning
-	$"../../Models".global_position = path_follower.global_position
+	rigid_body.global_position = path_follower.global_position
 	rigid_body.linear_velocity.y = 0.0
 	
 	# Check if the grind ends, or the player jumps
 	if Input.is_action_pressed("jump"): 
-		$"../..".squash(delta, 50)
+		models.squash(delta, 50)
 	if Input.is_action_just_released("jump"):
 		end_grind()
 		get_parent().change_state(get_parent().States.Jumping)
@@ -174,12 +177,12 @@ func move(delta):
 	rigid_body.linear_velocity = velocity
 
 func end_grind():
-	rigid_body.global_position = $"../../Models".global_position
-	rigid_body.global_rotation = $"../../Models".global_rotation
+	# rigid_body.global_position = models.global_position
+	# rigid_body.global_rotation = models.global_rotation
 	rigid_body.freeze = false
-	$"../../RigidBody/CollisionShape3D".disabled = false
-	$"../../RigidBody/GroundRays".checking_floor(true)
-	$"../../CameraSubsystem".set_followable(rigid_body)
+	collision_shape.disabled = false
+	ground_rays.checking_floor(true)
+	camera_subsystem.set_followable(rigid_body)
 	$"../../Ui".grind_curve.stop_grind()
 
 func check_fall():
@@ -202,26 +205,6 @@ func get_grindables():
 		grind_areas.append(grindable)
 	
 	return grind_areas
-
-
-"""
-func debug(rigidbody, grindables):
-	var display = false
-	
-	if grindables.size() > 0:
-		line_grind.mesh.clear_surfaces()
-		line_grind.mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-		for grindable in grindables:
-			print(grindable)
-			var distance_to_element = grindable.path_follower.global_position.distance_to(rigidbody.global_position)
-			if distance_to_element <= grind_check_radius:
-				display = true
-				line_grind.mesh.surface_add_vertex(rigidbody.global_transform.origin)
-				line_grind.mesh.surface_add_vertex(grindable.path_follower.global_position)
-	
-		if display:
-			line_grind.mesh.surface_end()
-"""
 
 func get_closest_grind(grindables):
 	var distance_flag = null

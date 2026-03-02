@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://0jixvuu5d0pd"]
+
+[ext_resource type="Texture2D" uid="uid://bhvn37s4ixfef" path="res://Assets/Materials/tyreTrack.png" id="1_nafnq"]
+[ext_resource type="Script" uid="uid://cded5eqek6aiv" path="res://Assets/Prefabs/Player/TyreMark/Scripts/tyre_mark.gd" id="2_tahnb"]
+
+[node name="TyreMark" type="Decal"]
+size = Vector3(0.05, 0.1, 0.05)
+texture_albedo = ExtResource("1_nafnq")
+modulate = Color(0.14406264, 0.14406252, 0.14406249, 1)
+upper_fade = 0.0055744266
+lower_fade = 0.0076148673
+script = ExtResource("2_tahnb")

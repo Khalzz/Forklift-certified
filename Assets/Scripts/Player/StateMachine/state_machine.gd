@@ -50,7 +50,6 @@ var grindable_states = [States.Idle, States.Jumping, States.Falling, States.Runn
 
 var static_states = [States.Grinding]
 
-var x_input = Vector2.ZERO
 var y_input = Vector2.ZERO
 
 func air_tricks():
@@ -70,7 +69,6 @@ var count = 0.0
 
 func _process(delta: float) -> void:
 	count += delta
-	x_input = Controller.l_stick.x
 	y_input = -Controller.l_stick.y
 	xr_input = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)
 	yr_input = -Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
@@ -126,13 +124,9 @@ func is_point_inside_capsule(point: Vector3, collision_shape: CollisionShape3D) 
 func _physics_process(delta: float) -> void:
 	var move_dir = rigid_body.linear_velocity.normalized()
 	
-	if not static_states.has(state):
-		models.global_position = rigid_body.global_position
-		models.global_rotation = rigid_body.global_rotation
-	
-	# var arrow_position = rigid_body.global_transform.origin + move_dir * 1.0
-	# direction_arrow.position.x = arrow_position.x
-	# direction_arrow.position.z = arrow_position.z
+	# if not static_states.has(state):
+		# models.global_position = rigid_body.global_position
+		# models.global_rotation = rigid_body.global_rotation
 	
 	var angle = atan2(move_dir.x, move_dir.z)
 	

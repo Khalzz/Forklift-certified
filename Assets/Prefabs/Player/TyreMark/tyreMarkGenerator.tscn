@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwvbshrrjqn6l"]
+
+[ext_resource type="Script" uid="uid://cndxe44r8jhg2" path="res://Assets/Prefabs/Player/TyreMark/Scripts/tyre_mark_generator.gd" id="1_mflur"]
+
+[node name="TyreMarkGenerator" type="Node3D"]
+script = ExtResource("1_mflur")

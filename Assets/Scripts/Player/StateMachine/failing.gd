@@ -1,11 +1,11 @@
 extends State
 
-var initial_velocity = null
-var rigid_body = null
 @export var damping_factor = 1.0  # Value between 0 and 1, closer to 1 is slower damping
+@export var rigid_body: RigidBody3D  # Value between 0 and 1, closer to 1 is slower damping
 
 @onready var animation_player = $"../../AnimationManager"
 
+var initial_velocity = null
 
 func _ready() -> void:
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
@@ -14,7 +14,6 @@ func start():
 	animation_player.play("failing")
 	$"../../TrickManager".set_trick(-1)
 	$"..".danger_state = false
-	rigid_body = $"../../RigidBody"
 	var velocity = rigid_body.linear_velocity  # Get current velocity vector
 	
 	if initial_velocity == null:

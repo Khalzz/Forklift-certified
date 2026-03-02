@@ -2,6 +2,7 @@ extends State
 
 @export var rigid_body: RigidBody3D
 @export var models: Node3D
+@export var ui: CanvasLayer
 
 var rng = RandomNumberGenerator.new()
 
@@ -30,7 +31,8 @@ func update(delta: float):
 func fixed_update(delta: float):
 	if get_parent().rigid_body.linear_velocity.length() > 0.1:
 		if get_parent().is_touching_ground():
-			get_parent().rigid_body.angular_velocity.y = -(2.5 * get_parent().x_input)
+			# rigid_body.rotation.y -= (2.5 * Controller.l_stick.x) * delta
+			rigid_body.angular_velocity.y = -(2.5 * Controller.l_stick.x)
 
 	if get_parent().is_touching_ground() and get_parent().rigid_body.linear_velocity.length() > 0.1:
 		var current_velocity = get_parent().rigid_body.linear_velocity
@@ -50,13 +52,23 @@ func fixed_update(delta: float):
 	else:
 		models.sparks.visible = false
 
+	# Aparently if its < 0 its going forwards, else its going front
+	var forward = rigid_body.global_transform.basis.z
+	var dot_direction = rigid_body.linear_velocity.dot(forward)
+	ui.direction_dot.set_text("Direction: " + str("%.2f" % dot_direction))
+
 	if throttle_axis > 0.1:
 		real_speed = lerp(real_speed, max_speed, delta * 10.0)
 		rigid_body.physics_material_override.friction = 0.7
 		get_parent().rigid_body.apply_central_force(((get_parent().rigid_body.transform.basis.z) * real_speed) * throttle_axis)
 	elif throttle_axis < -0.1:
-		real_speed = 0.0
-		rigid_body.physics_material_override.friction = 1.0
+		if (dot_direction <= 0.0):
+			real_speed = lerp(real_speed, max_speed, delta * 10.0)
+			rigid_body.physics_material_override.friction = 0.7
+			get_parent().rigid_body.apply_central_force(((get_parent().rigid_body.transform.basis.z) * real_speed) * throttle_axis)
+		else:
+			real_speed = 0.0
+			rigid_body.physics_material_override.friction = 1.0
 	else:
 		real_speed = 0.0
 		rigid_body.physics_material_override.friction = 0.1

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv7wqj21u822k"]
+
+[ext_resource type="Script" uid="uid://smb7oca13imu" path="res://Assets/Prefabs/Player/WheelRay/Scripts/wheel_ray.gd" id="1_204va"]
+[ext_resource type="PackedScene" uid="uid://c0dc8ml5dxm1h" path="res://Assets/Models/wheel/wheel.glb" id="2_5kbb4"]
+
+[node name="WheelRay" type="RayCast3D"]
+target_position = Vector3(0, -0.1, 0)
+script = ExtResource("1_204va")
+
+[node name="wheel" parent="." instance=ExtResource("2_5kbb4")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)

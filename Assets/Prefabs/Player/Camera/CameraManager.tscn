@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwqrw2gqrt800"]
+
+[ext_resource type="Script" uid="uid://cscc34jipl8uf" path="res://Assets/Prefabs/Player/Camera/Scripts/camera_manager.gd" id="1_4iv32"]
+
+[node name="CameraSubsystem" type="Node3D" node_paths=PackedStringArray("cameras_setter")]
+script = ExtResource("1_4iv32")
+cameras_setter = NodePath("Cameras")
+
+[node name="ActualCamera" type="Camera3D" parent="."]
+
+[node name="Cameras" type="Node3D" parent="."]
+
+[node name="BackCloseCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.451356, -1.2574832)
+fov = 90.0
+
+[node name="BackFarCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(-1, 0, 8.742278e-08, 7.86205e-08, 0.4373041, 0.8993137, -3.823034e-08, 0.8993137, -0.4373041, 0, 1.3153647, -0.28696775)
+fov = 90.0
+
+[node name="GrindCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(1, 0, 0, 0, 0.07657981, 0.99706346, 0, -0.99706346, 0.07657981, -0.164812, 0.59436953, 0.23072147)
+fov = 142.62326
+
+[node name="SideCamera" type="Camera3D" parent="Cameras"]
+transform = Transform3D(0.28961653, -0.2491949, 0.9241343, 0, 0.9655135, 0.2603529, -0.9571428, -0.075402506, 0.27962866, 1.6050173, 0.59436953, 0.23072147)
+fov = 70.0

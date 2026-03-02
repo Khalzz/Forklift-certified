@@ -1,6 +1,7 @@
 extends State
 
 @export var models: Node3D
+@export var rigid_body: Node3D
 
 var jump_strength = 5.0
 var jumping = false
@@ -20,7 +21,7 @@ func start():
 	can_check_ground = false
 	jump_timer = 0.0
 
-	if get_parent().x_input > 0.5 or get_parent().x_input < -0.5:
+	if Controller.l_stick.x > 0.5 or Controller.l_stick.x < -0.5:
 		direction_count = 1.0
 	else:
 		direction_count = 0.0
@@ -36,6 +37,8 @@ func update(delta):
 	
 	if get_parent().is_touching_ground() and can_check_ground:
 		models.squash(delta, 150)
+		#rigid_body.global_rotation.y = models.global_rotation.y
+		#models.rotation.y = 0.0
 		get_parent().change_state(get_parent().States.Running)
 
 func fixed_update(delta):
@@ -43,8 +46,10 @@ func fixed_update(delta):
 		jumping = true
 		can_check_ground = false
 	
-	if (get_parent().x_input > 0.5 or get_parent().x_input < -0.5):
+	if (Controller.l_stick.x > 0.5 or Controller.l_stick.x < -0.5):
 		direction_count += delta
 		$"../../Ui".spin_count.set_text("%.2f" % direction_count)
 		if direction_count >= 0.10:
-			get_parent().rigid_body.rotation.y -= (10.0 * get_parent().x_input) * delta
+			print("Something here?")
+			print(Controller.l_stick.x)
+			rigid_body.rotation.y -= (10.0 * Controller.l_stick.x) * delta
