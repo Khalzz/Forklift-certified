@@ -117,16 +117,14 @@ func _init() -> void:
 func set_trick(trick: TricksEnum):
 	if trick == -1 or not can_trick:
 		selected_trick = trick
-		tricks_list = []
-		tricks_string = ""
-		added_points = 0
-		multiplier = 0
-		return
 
 	var animation_player = $"../AnimationManager"
 	var trick_changed = (selected_trick != trick)
 	selected_trick = trick
 
+	if selected_trick == -1:
+		return
+		
 	if tricks[selected_trick].has("animation"):
 		if trick_changed:
 			animation_player.play(tricks[selected_trick].animation)
@@ -162,14 +160,14 @@ func get_trick():
 func _process(delta: float) -> void:
 	$"../Ui".set_points(points) # Aprox them
 	
+	if $"../StateMachine".is_touching_ground():
+		failed_or_landed()
+	
 	if selected_trick != -1:
 		# This is not working for some reason, check why the player stills falls even after this being commented
 		# if tricks[selected_trick].get("fall", false):
 			#selected_trick = null
 			
-		if $"../StateMachine".is_touching_ground():
-			failed_or_landed()
-		
 		# If the player is doing t he correct trick
 		if tricks.has(selected_trick):
 			if not tricks[selected_trick].has("unique"):
@@ -177,15 +175,19 @@ func _process(delta: float) -> void:
 			$"../Ui".combo_tricks.set_text(tricks_string)
 			$"../Ui".combo_points.set_text(str(multiplier) + "x " + str(int(added_points)))
 			$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 1.0, delta * 10.0)
+			
+
 	else:
 		$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 0.0, delta * 5.0)
 		if trick_point_adding_flag:
 			points += added_points * multiplier
-			multiplier = 0
-			added_points	 = 0
 			trick_point_adding_flag = false
 		
 		
 func failed_or_landed():
+	tricks_list = []
+	tricks_string = ""
+	added_points = 0
+	multiplier = 0
 	trick_point_adding_flag = true
 	selected_trick = -1

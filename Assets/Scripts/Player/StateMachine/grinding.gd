@@ -150,7 +150,7 @@ func set_base_speed():
 	var horizontal_speed = horizontal_velocity.length()
 	
 	# Store as absolute value - alignment handles direction in move()
-	grind_speed = horizontal_speed
+	grind_speed = horizontal_speed * 1.2
 
 func move(delta):
 	if not path_follower:

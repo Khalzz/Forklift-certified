@@ -51,7 +51,7 @@ func set_followable(element, physics = true):
 	physics_activated = physics
 	followable = element
 	last_position = followable.global_position
-	last_direction = -followable.global_transform.basis.z  # Use initial facing direction
+	#last_direction = -followable.global_transform.basis.z  # Use initial facing direction
 
 func _ready():
 	if followable:

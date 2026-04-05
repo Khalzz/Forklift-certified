@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://mi05ey7om8au"]
+
+[ext_resource type="PackedScene" uid="uid://b04w35eygdn4e" path="res://Assets/Prefabs/World/crate.tscn" id="1_vi3h0"]
+
+[node name="SingleBox" type="Node3D" unique_id=738716925]
+
+[node name="Crate" parent="." unique_id=720400323 instance=ExtResource("1_vi3h0")]

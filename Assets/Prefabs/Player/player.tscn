@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://wxwv7k0r8tso"]
+[gd_scene format=3 uid="uid://wxwv7k0r8tso"]
 
 [ext_resource type="Script" uid="uid://biiekm6wq160m" path="res://Assets/Prefabs/Player/Scripts/models.gd" id="1_qd3ub"]
 [ext_resource type="Script" uid="uid://da5o87si013kg" path="res://Assets/Prefabs/Player/Scripts/player.gd" id="1_x376u"]
@@ -365,7 +365,7 @@ height = 1.39311
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_qd3ub"]
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("player_model", "player_direction", "model_orientation")]
+[node name="Player" type="RigidBody3D" unique_id=400505606 node_paths=PackedStringArray("player_model", "player_direction", "model_orientation")]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_ujewd")
@@ -375,11 +375,11 @@ player_model = NodePath("Models/PlayerModel/forklift")
 player_direction = NodePath("Debug/Directional/MovementDirection")
 model_orientation = NodePath("Debug/Directional/PlayerOrientation")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1666527917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00645447, 0.13503218, -0.011139)
 shape = SubResource("CapsuleShape3D_6u31d")
 
-[node name="Models" type="Node3D" parent="." node_paths=PackedStringArray("player_model", "sparks", "rigidbody")]
+[node name="Models" type="Node3D" parent="." unique_id=1275261105 node_paths=PackedStringArray("player_model", "sparks", "rigidbody")]
 script = ExtResource("1_qd3ub")
 player_model = NodePath("PlayerModel/forklift")
 sparks = NodePath("Sparks")
@@ -389,66 +389,66 @@ tilt_smoothing = 10.0
 max_pitch = 10.0
 max_roll = 10.0
 
-[node name="Sparks" type="Node3D" parent="Models"]
+[node name="Sparks" type="Node3D" parent="Models" unique_id=134251916]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028274, -0.118351)
 
-[node name="LeftSpark" type="Sprite3D" parent="Models/Sparks"]
+[node name="LeftSpark" type="Sprite3D" parent="Models/Sparks" unique_id=1621168811]
 transform = Transform3D(0.012941, 0, 0.0482963, 0, 0.05, 0, -0.0482963, 0, 0.012941, 0.137486, 0.0887101, -0.162268)
 
-[node name="RightSpark" type="Sprite3D" parent="Models/Sparks"]
+[node name="RightSpark" type="Sprite3D" parent="Models/Sparks" unique_id=1676119621]
 transform = Transform3D(-0.012941, 0, 0.0482963, 0, 0.05, 0, -0.0482963, 0, -0.012941, -0.137678, 0.0887101, -0.162268)
 
-[node name="tyreMarkGenerators" type="Node3D" parent="Models"]
+[node name="tyreMarkGenerators" type="Node3D" parent="Models" unique_id=4112504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.012905762, 0)
 script = ExtResource("3_8ylme")
 
-[node name="TyreMarkGeneratorRr" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
+[node name="TyreMarkGeneratorRr" parent="Models/tyreMarkGenerators" unique_id=164505081 node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.087389335, -0.009162664, -0.11866216)
 rigidbody = NodePath("../../..")
 
-[node name="TyreMarkGeneratorRl" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
+[node name="TyreMarkGeneratorRl" parent="Models/tyreMarkGenerators" unique_id=1996252109 node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.087, -0.009162664, -0.118813775)
 rigidbody = NodePath("../../..")
 
-[node name="TyreMarkGeneratorFr" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
+[node name="TyreMarkGeneratorFr" parent="Models/tyreMarkGenerators" unique_id=169847745 node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.104, 0.007428147, 0.08)
 rigidbody = NodePath("../../..")
 
-[node name="TyreMarkGeneratorFl" parent="Models/tyreMarkGenerators" node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
+[node name="TyreMarkGeneratorFl" parent="Models/tyreMarkGenerators" unique_id=1023056293 node_paths=PackedStringArray("rigidbody") instance=ExtResource("4_v2whk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10364561, 0.007428147, 0.08)
 rigidbody = NodePath("../../..")
 
-[node name="PlayerModel" type="Node3D" parent="Models"]
+[node name="PlayerModel" type="Node3D" parent="Models" unique_id=981247183]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.133, 0)
 
-[node name="forklift" parent="Models/PlayerModel" instance=ExtResource("15_xu20a")]
+[node name="forklift" parent="Models/PlayerModel" unique_id=680054539 instance=ExtResource("15_xu20a")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.09457596, 0)
 
-[node name="GroundRays" type="Node3D" parent="Models/PlayerModel"]
+[node name="GroundRays" type="Node3D" parent="Models/PlayerModel" unique_id=2125505253]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04469548, 0)
 script = ExtResource("11_e47kb")
 
-[node name="WheelRayRL" parent="Models/PlayerModel/GroundRays" node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
+[node name="WheelRayRL" parent="Models/PlayerModel/GroundRays" unique_id=1031047951 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07906559, -0.03219101, -0.13102299)
 rigid_body = NodePath("../../../..")
 
-[node name="WheelRayRR" parent="Models/PlayerModel/GroundRays" node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
+[node name="WheelRayRR" parent="Models/PlayerModel/GroundRays" unique_id=744835170 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.079, -0.032, -0.131)
 rigid_body = NodePath("../../../..")
 
-[node name="WheelRayFL" parent="Models/PlayerModel/GroundRays" node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
+[node name="WheelRayFL" parent="Models/PlayerModel/GroundRays" unique_id=383122058 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.032, 0.075)
 rigid_body = NodePath("../../../..")
 directional_wheel = true
 rotation_multiplier = -1.0
 
-[node name="WheelRayFR" parent="Models/PlayerModel/GroundRays" node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
+[node name="WheelRayFR" parent="Models/PlayerModel/GroundRays" unique_id=408804481 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.09, -0.032, 0.075)
 rigid_body = NodePath("../../../..")
 directional_wheel = true
 rotation_multiplier = -1.0
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("ground_rays", "rigid_body", "models", "ui", "idle_node", "jumping_node", "running_node", "falling_node", "grinding_node", "failing_node")]
+[node name="StateMachine" type="Node" parent="." unique_id=1490699282 node_paths=PackedStringArray("ground_rays", "rigid_body", "models", "ui", "idle_node", "jumping_node", "running_node", "falling_node", "grinding_node", "failing_node")]
 script = ExtResource("4_rys8n")
 ground_rays = NodePath("../Checkers/GroundRays")
 rigid_body = NodePath("..")
@@ -461,25 +461,25 @@ falling_node = NodePath("Falling")
 grinding_node = NodePath("Grinding")
 failing_node = NodePath("Failing")
 
-[node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("models", "rigid_body")]
+[node name="Jumping" type="Node" parent="StateMachine" unique_id=631742670 node_paths=PackedStringArray("models", "rigid_body")]
 script = ExtResource("5_e47kb")
 models = NodePath("../../Models")
 rigid_body = NodePath("../..")
 
-[node name="Running" type="Node" parent="StateMachine" node_paths=PackedStringArray("rigid_body", "models", "ui")]
+[node name="Running" type="Node" parent="StateMachine" unique_id=1127472284 node_paths=PackedStringArray("rigid_body", "models", "ui")]
 script = ExtResource("6_qd3ub")
 rigid_body = NodePath("../..")
 models = NodePath("../../Models")
 ui = NodePath("../../Ui")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("models")]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1890630826 node_paths=PackedStringArray("models")]
 script = ExtResource("7_lvbuq")
 models = NodePath("../../Models")
 
-[node name="Falling" type="Node" parent="StateMachine"]
+[node name="Falling" type="Node" parent="StateMachine" unique_id=387288019]
 script = ExtResource("8_ujewd")
 
-[node name="Grinding" type="Node" parent="StateMachine" node_paths=PackedStringArray("rigid_body", "line_grind", "collision_shape", "ground_rays", "camera_subsystem", "models")]
+[node name="Grinding" type="Node" parent="StateMachine" unique_id=842869830 node_paths=PackedStringArray("rigid_body", "line_grind", "collision_shape", "ground_rays", "camera_subsystem", "models")]
 script = ExtResource("9_6u31d")
 rigid_body = NodePath("../..")
 line_grind = NodePath("../../Debug/Grind/LineGrind")
@@ -488,95 +488,93 @@ ground_rays = NodePath("../../Checkers/GroundRays")
 camera_subsystem = NodePath("../../CameraSubsystem")
 models = NodePath("../../Models")
 
-[node name="Failing" type="Node" parent="StateMachine" node_paths=PackedStringArray("rigid_body")]
+[node name="Failing" type="Node" parent="StateMachine" unique_id=1937820523 node_paths=PackedStringArray("rigid_body")]
 script = ExtResource("10_ch813")
 rigid_body = NodePath("../..")
 
-[node name="TrickManager" type="Node" parent="."]
+[node name="TrickManager" type="Node" parent="." unique_id=223263466]
 script = ExtResource("11_qd3ub")
 
-[node name="Ui" parent="." instance=ExtResource("12_lvbuq")]
+[node name="Ui" parent="." unique_id=126038714 instance=ExtResource("12_lvbuq")]
 
-[node name="AnimationManager" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_kct70")
-}
+[node name="AnimationManager" type="AnimationPlayer" parent="." unique_id=1224614803]
+libraries/ = SubResource("AnimationLibrary_kct70")
 
-[node name="Checkers" type="Node3D" parent="."]
+[node name="Checkers" type="Node3D" parent="." unique_id=138393965]
 
-[node name="GroundRays" type="Node3D" parent="Checkers"]
+[node name="GroundRays" type="Node3D" parent="Checkers" unique_id=1340535829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0854731, 0)
 script = ExtResource("11_e47kb")
 
-[node name="WheelRayRL" parent="Checkers/GroundRays" instance=ExtResource("16_oet88")]
+[node name="WheelRayRL" parent="Checkers/GroundRays" unique_id=2066338933 instance=ExtResource("16_oet88")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07906559, -0.03219101, -0.13102299)
 show_wheel = false
 
-[node name="WheelRayRR" parent="Checkers/GroundRays" instance=ExtResource("16_oet88")]
+[node name="WheelRayRR" parent="Checkers/GroundRays" unique_id=1110798725 instance=ExtResource("16_oet88")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.079, -0.032, -0.131)
 show_wheel = false
 
-[node name="WheelRayFL" parent="Checkers/GroundRays" instance=ExtResource("16_oet88")]
+[node name="WheelRayFL" parent="Checkers/GroundRays" unique_id=1216649232 instance=ExtResource("16_oet88")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09, -0.032, 0.075)
 show_wheel = false
 
-[node name="WheelRayFR" parent="Checkers/GroundRays" instance=ExtResource("16_oet88")]
+[node name="WheelRayFR" parent="Checkers/GroundRays" unique_id=1794641732 instance=ExtResource("16_oet88")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.09, -0.032, 0.075)
 show_wheel = false
 
-[node name="GrindChecker" type="Area3D" parent="Checkers" node_paths=PackedStringArray("base_player", "state_machine")]
+[node name="GrindChecker" type="Area3D" parent="Checkers" unique_id=1949905051 node_paths=PackedStringArray("base_player", "state_machine")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125758, 0)
 script = ExtResource("13_ujewd")
 base_player = NodePath("../..")
 state_machine = NodePath("../../StateMachine")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkers/GrindChecker"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkers/GrindChecker" unique_id=157525024]
 transform = Transform3D(1, 0, 0, 0, 0.9992028, -0.03992252, 0, 0.03992252, 0.9992028, 0, -0.45174682, -0.0235922)
 shape = SubResource("CapsuleShape3D_ch813")
 
-[node name="NormalDetection" type="RayCast3D" parent="Checkers" node_paths=PackedStringArray("player")]
+[node name="NormalDetection" type="RayCast3D" parent="Checkers" unique_id=610169766 node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.170845, 0)
 target_position = Vector3(0, -0.5, 0)
 script = ExtResource("14_6u31d")
 player = NodePath("../..")
 
-[node name="Debug" type="Node3D" parent="."]
+[node name="Debug" type="Node3D" parent="." unique_id=422191709]
 
-[node name="Grind" type="Node" parent="Debug"]
+[node name="Grind" type="Node" parent="Debug" unique_id=2072706595]
 
-[node name="LineGrind" type="MeshInstance3D" parent="Debug/Grind"]
+[node name="LineGrind" type="MeshInstance3D" parent="Debug/Grind" unique_id=848140851]
 mesh = SubResource("ImmediateMesh_qd3ub")
 skeleton = NodePath("../..")
 
-[node name="Directional" type="Node3D" parent="Debug"]
+[node name="Directional" type="Node3D" parent="Debug" unique_id=1585617700]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10110474, 0)
 
-[node name="MovementDirection" type="Sprite3D" parent="Debug/Directional"]
+[node name="MovementDirection" type="Sprite3D" parent="Debug/Directional" unique_id=1843728128]
 transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -0.1, 0, 0.1, -4.371139e-09, 0, 0, 0)
 modulate = Color(0.46666667, 1, 0.4745098, 1)
 texture_filter = 0
 texture = ExtResource("18_hchy4")
 
-[node name="PlayerOrientation" type="Sprite3D" parent="Debug/Directional"]
+[node name="PlayerOrientation" type="Sprite3D" parent="Debug/Directional" unique_id=947074785]
 transform = Transform3D(0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0, 0)
 modulate = Color(1, 0.4862745, 1, 1)
 texture_filter = 0
 texture = ExtResource("18_hchy4")
 
-[node name="CameraSubsystem" parent="." node_paths=PackedStringArray("followable") instance=ExtResource("19_hchy4")]
+[node name="CameraSubsystem" parent="." unique_id=1724494621 node_paths=PackedStringArray("followable") instance=ExtResource("19_hchy4")]
 top_level = true
 followable = NodePath("..")
 
-[node name="FirstPersonView" type="Node3D" parent="." node_paths=PackedStringArray("steering_wheel", "cockpit_ui")]
+[node name="FirstPersonView" type="Node3D" parent="." unique_id=1509051487 node_paths=PackedStringArray("steering_wheel", "cockpit_ui")]
 script = ExtResource("18_v2whk")
 steering_wheel = NodePath("Ui/SteeringWheel/WheelSprite")
 cockpit_ui = NodePath("Ui")
 
-[node name="FPCamera" type="Camera3D" parent="FirstPersonView"]
+[node name="FPCamera" type="Camera3D" parent="FirstPersonView" unique_id=1404274329]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, 0, 0.24710363, -0.07849455)
 fov = 90.0
 
-[node name="Ui" type="Control" parent="FirstPersonView"]
+[node name="Ui" type="Control" parent="FirstPersonView" unique_id=1880933339]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -584,7 +582,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SteeringWheel" type="Control" parent="FirstPersonView/Ui"]
+[node name="SteeringWheel" type="Control" parent="FirstPersonView/Ui" unique_id=1501720791]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -597,12 +595,12 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="WheelSprite" type="Sprite2D" parent="FirstPersonView/Ui/SteeringWheel"]
+[node name="WheelSprite" type="Sprite2D" parent="FirstPersonView/Ui/SteeringWheel" unique_id=1921482111]
 position = Vector2(-105.59996, -59.199947)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("19_5hj55")
 
-[node name="LiftStick" type="Control" parent="FirstPersonView/Ui"]
+[node name="LiftStick" type="Control" parent="FirstPersonView/Ui" unique_id=2110915158]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -615,5 +613,5 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="LiftStick" parent="FirstPersonView/Ui/LiftStick" instance=ExtResource("20_khu1v")]
+[node name="LiftStick" parent="FirstPersonView/Ui/LiftStick" unique_id=1911528847 instance=ExtResource("20_khu1v")]
 position = Vector2(417.99994, -108)
