@@ -1,129 +1,218 @@
 [gd_scene format=3 uid="uid://cr0h0q780l4sw"]
 
 [ext_resource type="Script" uid="uid://dvoaify86kj5b" path="res://Assets/Scripts/Player/ui.gd" id="1_4uwai"]
+[ext_resource type="FontFile" uid="uid://d4n2qxfo0p3yo" path="res://Assets/Fonts/Orbitron/static/Orbitron-Black.ttf" id="2_3xdxn"]
+[ext_resource type="Script" uid="uid://b1mq37qlphvpm" path="res://Assets/Prefabs/Player/GradeManagement/grade_management.gd" id="2_eyfqd"]
 [ext_resource type="PackedScene" uid="uid://cprccwbiatvop" path="res://Assets/Prefabs/Transitions/transition.tscn" id="2_n4v27"]
+[ext_resource type="Script" uid="uid://b1cf88hlrej3d" path="res://Assets/Prefabs/Player/UI/trick_management.gd" id="2_pkf77"]
 [ext_resource type="Texture2D" uid="uid://dsj460wan0f6t" path="res://Assets/Sprites/Gameplay/Grinds/GrindRect.svg" id="3_2u4ou"]
+[ext_resource type="Script" uid="uid://d31u2p6aydft0" path="res://Assets/Prefabs/Player/UI/tricks_list.gd" id="4_pkf77"]
 [ext_resource type="PackedScene" uid="uid://cqdpx5a08j4w7" path="res://Assets/Prefabs/Grind/balancing_curve.tscn" id="4_srddr"]
 
-[node name="CanvasLayer" type="CanvasLayer" unique_id=1518127562 node_paths=PackedStringArray("state_label", "can_grind_label", "can_trick_label", "spin_count", "direction_dot", "points", "combo_points", "combo_tricks", "combo_container", "grind_curve")]
+[sub_resource type="FontVariation" id="FontVariation_en1lf"]
+base_font = ExtResource("2_3xdxn")
+spacing_top = -11
+spacing_bottom = -9
+
+[sub_resource type="FontVariation" id="FontVariation_pkf77"]
+base_font = ExtResource("2_3xdxn")
+spacing_top = -6
+spacing_bottom = -4
+
+[sub_resource type="FontVariation" id="FontVariation_3xdxn"]
+base_font = ExtResource("2_3xdxn")
+spacing_top = -23
+spacing_bottom = -19
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1518127562 node_paths=PackedStringArray("state_label", "can_grind_label", "can_trick_label", "speed", "spin_count", "direction_dot", "framerate", "trick_manager", "grind_curve")]
 script = ExtResource("1_4uwai")
-state_label = NodePath("Panel/MarginContainer/DebugLabels/State")
-can_grind_label = NodePath("Panel/MarginContainer/DebugLabels/CanGrind")
-can_trick_label = NodePath("Panel/MarginContainer/DebugLabels/CanTrick")
-spin_count = NodePath("Panel/MarginContainer/DebugLabels/SpinCount")
-direction_dot = NodePath("Panel/MarginContainer/DebugLabels/DirectionDot")
-points = NodePath("MarginContainer/DebugLabels/Points")
-combo_points = NodePath("ComboContainer/ComboBoxContainer/ComboPoints")
-combo_tricks = NodePath("ComboContainer/ComboBoxContainer/ComboTricks")
-combo_container = NodePath("ComboContainer")
+state_label = NodePath("Margin/Debug/Margin/DebugLabels/State")
+can_grind_label = NodePath("Margin/Debug/Margin/DebugLabels/CanGrind")
+can_trick_label = NodePath("Margin/Debug/Margin/DebugLabels/CanTrick")
+speed = NodePath("Margin/Debug/Margin/DebugLabels/Speed")
+spin_count = NodePath("Margin/Debug/Margin/DebugLabels/SpinCount")
+direction_dot = NodePath("Margin/Debug/Margin/DebugLabels/DirectionDot")
+framerate = NodePath("Margin/Debug/Margin/DebugLabels/Framerate")
+trick_manager = NodePath("Margin/TrickManager")
 grind_curve = NodePath("Balancing_curve")
 
-[node name="Panel" type="Panel" parent="." unique_id=940374586]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -141.0
-offset_bottom = 168.0
-grow_horizontal = 0
-
-[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1579656534]
-layout_mode = 1
+[node name="Margin" type="MarginContainer" parent="." unique_id=1917065652]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ScoreTimer" type="VBoxContainer" parent="Margin" unique_id=447304707]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="Timer" type="Label" parent="Margin/ScoreTimer" unique_id=1413704389]
+clip_children = 2
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = SubResource("FontVariation_en1lf")
+theme_override_font_sizes/font_size = 40
+text = "00:00:00"
+
+[node name="Score" type="Label" parent="Margin/ScoreTimer" unique_id=795785134]
+clip_children = 2
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = SubResource("FontVariation_pkf77")
+theme_override_font_sizes/font_size = 20
+text = "Score: 20.000"
+
+[node name="Debug" type="PanelContainer" parent="Margin" unique_id=1617128492]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Margin" type="MarginContainer" parent="Margin/Debug" unique_id=1901038453]
+layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="DebugLabels" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1506561146]
+[node name="DebugLabels" type="VBoxContainer" parent="Margin/Debug/Margin" unique_id=1506561146]
+clip_contents = true
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 
-[node name="Framerate" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=1851648173]
+[node name="Framerate" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=1851648173]
 layout_mode = 2
+size_flags_horizontal = 8
 text = "100 fps"
 
-[node name="State" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=1269597383]
+[node name="State" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=1269597383]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "State: Running"
 
-[node name="CanGrind" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=1349856132]
+[node name="CanGrind" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=1349856132]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Can Grind: True"
 
-[node name="CanTrick" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=1091801766]
+[node name="CanTrick" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=1091801766]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Can Trick: True"
 
-[node name="SpinCount" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=440415347]
+[node name="SpinCount" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=440415347]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Spin count: 0.0"
 
-[node name="DirectionDot" type="Label" parent="Panel/MarginContainer/DebugLabels" unique_id=252474628]
+[node name="DirectionDot" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=252474628]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "Direction: 0.0"
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=493028000]
-offset_right = 121.0
-offset_bottom = 77.0
-scale = Vector2(1.00311, 1)
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 10
-
-[node name="DebugLabels" type="VBoxContainer" parent="MarginContainer" unique_id=496994179]
+[node name="Speed" type="Label" parent="Margin/Debug/Margin/DebugLabels" unique_id=1885875640]
 layout_mode = 2
+size_flags_horizontal = 0
+text = "Speed: 0 KM/H"
 
-[node name="Points" type="Label" parent="MarginContainer/DebugLabels" unique_id=1651181172]
+[node name="TrickManager" type="VBoxContainer" parent="Margin" unique_id=605665938 node_paths=PackedStringArray("trick_list")]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
-text = "Score: 0"
+size_flags_horizontal = 0
+size_flags_vertical = 4
+script = ExtResource("2_pkf77")
+trick_list = NodePath("TricksContainer/TricksList")
 
-[node name="ComboContainer" type="MarginContainer" parent="." unique_id=2099620992]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+[node name="GradeManagement" type="Control" parent="Margin/TrickManager" unique_id=681316271]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("2_eyfqd")
+
+[node name="GradeOutline" type="Label" parent="Margin/TrickManager/GradeManagement" unique_id=2057267067]
+clip_children = 2
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -35.5
+offset_right = 120.0
+offset_bottom = 35.5
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(1, 1, 1, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_3xdxn")
+theme_override_font_sizes/font_size = 90
+text = "S+"
+
+[node name="GradeBg" type="Label" parent="Margin/TrickManager/GradeManagement" unique_id=1041687732]
+clip_children = 2
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -35.5
+offset_right = 120.0
+offset_bottom = 35.5
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = SubResource("FontVariation_3xdxn")
+theme_override_font_sizes/font_size = 90
+text = "S+"
+
+[node name="ColorRect" type="ColorRect" parent="Margin/TrickManager/GradeManagement/GradeBg" unique_id=880392376]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -222.0
-offset_top = -205.0
-offset_right = 222.0
 grow_horizontal = 2
-grow_vertical = 0
-scale = Vector2(1.00311, 1)
-theme_override_constants/margin_bottom = 130
+grow_vertical = 2
+pivot_offset = Vector2(58.755066, 71)
+color = Color(0.92156863, 0.75686276, 0.023529412, 1)
 
-[node name="ComboBoxContainer" type="VBoxContainer" parent="ComboContainer" unique_id=642066305]
+[node name="TricksContainer" type="Control" parent="Margin/TrickManager" unique_id=647997532]
+clip_contents = true
+custom_minimum_size = Vector2(300, 180)
 layout_mode = 2
 
-[node name="ComboTricks" type="RichTextLabel" parent="ComboContainer/ComboBoxContainer" unique_id=2069071714]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 25
-bbcode_enabled = true
-text = "[s]Trick 1, Trick 2, Trick 3[/s]"
-fit_content = true
-tab_size = 10
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ComboPoints" type="RichTextLabel" parent="ComboContainer/ComboBoxContainer" unique_id=35498355]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_colors/default_color = Color(0.568627, 0.623529, 0.921569, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 23
-bbcode_enabled = true
-text = "0000"
-fit_content = true
-tab_size = 10
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="TricksList" type="VBoxContainer" parent="Margin/TrickManager/TricksContainer" unique_id=1259219862]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 163.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("4_pkf77")
 
 [node name="Transition" parent="." unique_id=1992825482 instance=ExtResource("2_n4v27")]
 visible = false
@@ -155,6 +244,7 @@ texture = ExtResource("3_2u4ou")
 [node name="Balancing_curve" parent="." unique_id=1181460982 instance=ExtResource("4_srddr")]
 
 [node name="Dialogue" type="Control" parent="." unique_id=1990205331]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

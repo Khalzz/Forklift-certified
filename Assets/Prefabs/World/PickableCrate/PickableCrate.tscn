@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dupux5v6jeaqv"]
+
+[ext_resource type="PackedScene" uid="uid://b04w35eygdn4e" path="res://Assets/Prefabs/World/crate.tscn" id="1_hybda"]
+[ext_resource type="Script" uid="uid://do7j5vdlltyyg" path="res://Assets/Prefabs/World/PickableCrate/PickableCrate.gd" id="2_cduq2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cduq2"]
+size = Vector3(0.20019531, 0.19897461, 0.20117188)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fqxgq"]
+radius = 1.0
+
+[node name="PickableCrate" type="RigidBody3D" unique_id=414186366]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=47365505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00048828125, 0.09899902, 0)
+shape = SubResource("BoxShape3D_cduq2")
+
+[node name="Crate" parent="." unique_id=1840410885 instance=ExtResource("1_hybda")]
+
+[node name="CrateOnEnter" type="Area3D" parent="." unique_id=897955571]
+script = ExtResource("2_cduq2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CrateOnEnter" unique_id=1140641825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.10056223, 0)
+shape = SubResource("SphereShape3D_fqxgq")

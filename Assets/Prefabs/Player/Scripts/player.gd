@@ -4,6 +4,9 @@ extends RigidBody3D
 @export var player_direction: Node3D
 @export var model_orientation: Node3D
 @export var offset_distance := 0.5
+@export var ui: Node
+
+@export var crate_position: Node3D
 
 func _ready() -> void:
 	pass
@@ -34,3 +37,9 @@ func _process(delta: float) -> void:
 		var model_dir = model_forward.normalized()
 		model_orientation.global_position.x = global_position.x - model_dir.x * offset_distance
 		model_orientation.global_position.z = global_position.z - model_dir.z * offset_distance
+
+func _physics_process(delta: float) -> void:
+	var horizontal_speed = Vector3(linear_velocity.x, 0, linear_velocity.z).length()
+	ui.speed.set_text("Speed: " + str(int(horizontal_speed * 3.6 * 5.7)) + " KM/h")
+	
+	

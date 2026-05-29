@@ -3,23 +3,18 @@ extends CanvasLayer
 @export var state_label: Label
 @export var can_grind_label: Label
 @export var can_trick_label: Label
+@export var speed: Label
 @export var spin_count: Control
 @export var direction_dot: Control
+@export var framerate: Label
 
-# On screen labels
-@export var points: Label
-@export var combo_points: RichTextLabel
-@export var combo_tricks: RichTextLabel
-@export var	combo_container: Control
+@export var trick_manager: Control
 
 @export var grind_curve: Control
 
-var points_setted = 0
-
 func _process(delta: float) -> void:
-	$Panel/MarginContainer/DebugLabels/Framerate.set_text(str(int(Engine.get_frames_per_second())) + " FPS")
+	framerate.set_text(str(int(Engine.get_frames_per_second())) + " FPS")
 
-func set_points(points_to_add):
-	if points_setted != points_to_add:
-		points_setted = points_to_add
-		points.set_text(str("Points: " + str(points_setted)))
+func falling():
+	trick_manager.points = 0
+	

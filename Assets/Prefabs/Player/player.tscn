@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bmh2hnycylwoa" path="res://Assets/Prefabs/LiftStick/LiftStick.tscn" id="20_khu1v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujewd"]
+bounce = 0.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6u31d"]
 radius = 0.0841897
@@ -365,15 +366,19 @@ height = 1.39311
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_qd3ub"]
 
-[node name="Player" type="RigidBody3D" unique_id=400505606 node_paths=PackedStringArray("player_model", "player_direction", "model_orientation")]
+[node name="Player" type="RigidBody3D" unique_id=400505606 node_paths=PackedStringArray("player_model", "player_direction", "model_orientation", "ui", "crate_position") groups=["player"]]
+collision_layer = 2
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_ujewd")
+linear_damp_mode = 1
 angular_damp = 10.0
 script = ExtResource("1_x376u")
 player_model = NodePath("Models/PlayerModel/forklift")
 player_direction = NodePath("Debug/Directional/MovementDirection")
 model_orientation = NodePath("Debug/Directional/PlayerOrientation")
+ui = NodePath("Ui")
+crate_position = NodePath("Models/PlayerModel/forklift/BoxPosition")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1666527917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00645447, 0.13503218, -0.011139)
@@ -424,6 +429,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.133, 0)
 [node name="forklift" parent="Models/PlayerModel" unique_id=680054539 instance=ExtResource("15_xu20a")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.09457596, 0)
 
+[node name="BoxPosition" type="Node3D" parent="Models/PlayerModel/forklift" unique_id=158504260]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0.4590085, 2.5743783)
+
 [node name="GroundRays" type="Node3D" parent="Models/PlayerModel" unique_id=2125505253]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04469548, 0)
 script = ExtResource("11_e47kb")
@@ -433,7 +441,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07906559, -0.03219101, -0.1
 rigid_body = NodePath("../../../..")
 
 [node name="WheelRayRR" parent="Models/PlayerModel/GroundRays" unique_id=744835170 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.079, -0.032, -0.131)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.079, -0.032, -0.131)
 rigid_body = NodePath("../../../..")
 
 [node name="WheelRayFL" parent="Models/PlayerModel/GroundRays" unique_id=383122058 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
@@ -443,7 +451,7 @@ directional_wheel = true
 rotation_multiplier = -1.0
 
 [node name="WheelRayFR" parent="Models/PlayerModel/GroundRays" unique_id=408804481 node_paths=PackedStringArray("rigid_body") instance=ExtResource("16_oet88")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.09, -0.032, 0.075)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09, -0.032, 0.075)
 rigid_body = NodePath("../../../..")
 directional_wheel = true
 rotation_multiplier = -1.0
@@ -507,7 +515,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0854731, 0)
 script = ExtResource("11_e47kb")
 
 [node name="WheelRayRL" parent="Checkers/GroundRays" unique_id=2066338933 instance=ExtResource("16_oet88")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07906559, -0.03219101, -0.13102299)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07906559, -0.031052828, -0.13102299)
 show_wheel = false
 
 [node name="WheelRayRR" parent="Checkers/GroundRays" unique_id=1110798725 instance=ExtResource("16_oet88")]

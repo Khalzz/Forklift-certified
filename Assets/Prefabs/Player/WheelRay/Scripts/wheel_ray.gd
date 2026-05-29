@@ -34,7 +34,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if rigid_body:
 		var speed = rigid_body.linear_velocity.length()
-		wheel.rotation.x -= speed / (0.05 / 2) * delta
+		wheel.rotation.x += speed / (0.05 / 2) * delta
 	
 	if directional_wheel:
 		wheel.rotation.y = lerp(wheel.rotation.y, 1.0 * Controller.l_stick.x * rotation_multiplier, delta * 5.0)

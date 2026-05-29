@@ -84,8 +84,6 @@ func start():
 	rigid_body.freeze = true
 	initial_velocity = rigid_body.linear_velocity
 	#rigid_body.linear_velocity = Vector3(0.0, 0.0, 0.0)
-	print("Starting grind")
-	print(rigid_body.linear_velocity)
 	
 	collision_shape.disabled = true
 	ground_rays.checking_floor(false)

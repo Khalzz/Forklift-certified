@@ -11,6 +11,7 @@ func _ready() -> void:
 	animation_player.connect("animation_finished", Callable(self, "_on_animation_finished"))
 
 func start():
+	$"../../Ui".falling()
 	animation_player.play("failing")
 	$"../../TrickManager".set_trick(-1)
 	$"..".danger_state = false

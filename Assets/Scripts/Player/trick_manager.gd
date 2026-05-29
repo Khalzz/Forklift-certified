@@ -1,193 +1,81 @@
 extends Node
 
-# This code defines the way tricks will be handled and displayed in the screen
-
-"""
-Todo: 
-	- Add switches as tricks where if the player presses one key he will change
-		his orientation instantly from advancing to going backwards
-
-Remember dumbass the difference of concept between "Falling and landing"
-
-This trick container should have an especific logic handling, this mainly is:
-	- A combo is started once the player does one trick DONE
-	- A trick is added to the combo once the player does another trick or lands DONE
-		the trick with a "Connector trick" like:
-			- Manuals, switches, or other tricks.
-	- A combo is broken once the players fails to complete the execution of
-		a trick or once he lands another trick withouc a connector trick
-
-"""
-
-
-"""
-	Trick Manager
-
-	Trick manager is a script that will mainly define the way tricks and basic points will be taken
-	by defining what tricks can be made, what is being done, and how much points it will generate
-	either by second or by trick.
-	
-	The tricks types should be in a enum state, that will define on tricks a certain name and points
-"""
-
 enum TricksEnum {
-	# Grinds
 	None = -1,
-	FrontGrind,
-	SideGrind,
-	BackGrind,
-	LeftFlip,
-	RightFlip,
-	BackFlip,
-	FrontFlip,
+	FrontGrind, SideGrind, BackGrind,
+	LeftFlip, RightFlip, BackFlip, FrontFlip,
 	Fall
 }
 
-# This function referenciates the 
-const tricks = {
-	TricksEnum.FrontGrind: {
-		"label": "Grind",
-		"points": 100
-	},
-	TricksEnum.SideGrind: {
-		"label": "Side Grind",
-		"points": 125
-	},
-	TricksEnum.BackGrind: {
-		"label": "Back Grind",
-		"points": 150
-	},
-	TricksEnum.LeftFlip: {
-		"label": "Left Flip",
-		"animation": "left_flip",
-		"points": 120,
-		"unique": true
-	},
-	TricksEnum.RightFlip: {
-		"label": "Right Flip",
-		"animation": "right_flip",
-		"points": 120,
-		"unique": true
-	},
-	TricksEnum.BackFlip: {
-		"label": "Back Flip",
-		"animation": "back_flip",
-		"points": 120,
-		"unique": true
-	},
-	TricksEnum.FrontFlip: {
-		"label": "Front Flip",
-		"animation": "front_flip",
-		"points": 120,
-		"unique": true
-	},
-	TricksEnum.Fall: {
-		"fall": true
-	}
+const TRICKS = {
+	TricksEnum.FrontGrind: { "label": "Grind", "points": 200 },
+	TricksEnum.SideGrind:  { "label": "Side Grind", "points": 200 },
+	TricksEnum.BackGrind:  { "label": "Back Grind", "points": 200 },
+	TricksEnum.LeftFlip:   { "label": "Left Flip",  "points": 120, "animation": "left_flip",  "unique": true },
+	TricksEnum.RightFlip:  { "label": "Right Flip", "points": 120, "animation": "right_flip", "unique": true },
+	TricksEnum.BackFlip:   { "label": "Back Flip",  "points": 120, "animation": "back_flip",  "unique": true },
+	TricksEnum.FrontFlip:  { "label": "Front Flip", "points": 120, "animation": "front_flip", "unique": true },
+	TricksEnum.Fall:       { "fall": true }
 }
 
-var selected_trick = TricksEnum.None # This is the trick being done
-
-var points = 0 # Completed Points
-var added_points = 0 # Trick Points
-var multiplier = 0
-
-var tricks_list = []
-var tricks_string = ""
-
 @export var can_trick = true
-@export var can_grind = true
 
-var point_checker_scale = 0.0
+var selected_trick = TricksEnum.None
+var points = 0
+var active_grind_id := -1
+var active_grind_points := 0.0
 
-var is_doing_trick = false
-var trick_point_adding_flag = false
-var landed = true
+func set_trick(trick: TricksEnum) -> void:
+	if not can_trick:
+		return
 
-# Functions:
-	# - Setter and getter
-	# - Display the trick name
-	# - Display the trick points being taken
+	var data = TRICKS.get(trick, null)
+	if data == null or data.has("fall"):
+		selected_trick = TricksEnum.None
+		return
 
-func _init() -> void:
-	multiplier = 0
-	is_doing_trick = false
-	
-
-func set_trick(trick: TricksEnum):
-	if trick == -1 or not can_trick:
-		selected_trick = trick
-
-	var animation_player = $"../AnimationManager"
-	var trick_changed = (selected_trick != trick)
+	var is_unique = data.get("unique", false)
+	var same_trick = (trick == selected_trick)
 	selected_trick = trick
 
-	if selected_trick == -1:
-		return
-		
-	if tricks[selected_trick].has("animation"):
-		if trick_changed:
-			animation_player.play(tricks[selected_trick].animation)
-		else:
-			animation_player.stop()
-			animation_player.play(tricks[selected_trick].animation)
+	if data.has("animation"):
+		var anim = $"../AnimationManager"
+		anim.stop()
+		anim.play(data["animation"])
 
-	if not tricks_list.has(tricks[selected_trick].label):
-		multiplier += 1
-
-	if tricks[selected_trick].has("unique"):
-		tricks_list.append(tricks[selected_trick].label)
-		added_points += tricks[selected_trick].points
-		add_trick_string()
+	if is_unique:
+		$"../Ui".trick_manager.add_trick(data["label"], data["points"], false)
+		$"../Ui".trick_manager.points += data["points"]
 	else:
-		if tricks_list.size() > 0:
-			if tricks_list[tricks_list.size() - 1] != tricks[selected_trick].label:
-				tricks_list.append(tricks[selected_trick].label)
-				add_trick_string()
-		else:
-			tricks_list.append(tricks[selected_trick].label)
-			add_trick_string()
-
-func add_trick_string():
-	if not tricks_string == "":
-		tricks_string += " - "
-	
-	tricks_string += tricks[selected_trick].label
-
-func get_trick():
-	return selected_trick
+		if not same_trick:
+			active_grind_id += 1
+			active_grind_points = 0.0
 
 func _process(delta: float) -> void:
-	$"../Ui".set_points(points) # Aprox them
-	
-	if $"../StateMachine".is_touching_ground():
-		failed_or_landed()
-	
-	if selected_trick != -1:
-		# This is not working for some reason, check why the player stills falls even after this being commented
-		# if tricks[selected_trick].get("fall", false):
-			#selected_trick = null
-			
-		# If the player is doing t he correct trick
-		if tricks.has(selected_trick):
-			if not tricks[selected_trick].has("unique"):
-				added_points += tricks[selected_trick].points * delta
-			$"../Ui".combo_tricks.set_text(tricks_string)
-			$"../Ui".combo_points.set_text(str(multiplier) + "x " + str(int(added_points)))
-			$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 1.0, delta * 10.0)
-			
+	$"../Ui".trick_manager.can_trick = can_trick
 
-	else:
-		$"../Ui".combo_container.modulate.a = lerp($"../Ui".combo_container.modulate.a, 0.0, delta * 5.0)
-		if trick_point_adding_flag:
-			points += added_points * multiplier
-			trick_point_adding_flag = false
-		
-		
-func failed_or_landed():
-	tricks_list = []
-	tricks_string = ""
-	added_points = 0
-	multiplier = 0
-	trick_point_adding_flag = true
-	selected_trick = -1
+	if $"../StateMachine".is_touching_ground():
+		_on_land()
+		return
+	if selected_trick != TricksEnum.None:
+		var data = TRICKS.get(selected_trick, null)
+		if data and not data.get("unique", false):
+			active_grind_points += data["points"] * delta
+			$"../Ui".trick_manager.update_grind(active_grind_id, data["label"], active_grind_points)
+
+func _on_land() -> void:
+	if selected_trick != TricksEnum.None:
+		$"../Ui".trick_manager.points += active_grind_points
+	$"../Ui".trick_manager.is_grinding = false
+	selected_trick = TricksEnum.None
+	active_grind_points = 0.0
+	active_grind_id = -1
+
+func _on_fall() -> void:
+	print("AHH")
+	# Wipe everything
+	$"../Ui".trick_manager.points = 0
+	$"../Ui".trick_manager.reset()
+	selected_trick = TricksEnum.None
+	active_grind_points = 0.0
+	active_grind_id = -1

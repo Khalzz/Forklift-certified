@@ -3,13 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://gv2t4p6cslmj" path="res://Assets/Materials/texture_12.png" id="2_vu1er"]
 [ext_resource type="PackedScene" uid="uid://3n18bokpi40a" path="res://Assets/Prefabs/Grind/grind_path.tscn" id="4_fujv5"]
 [ext_resource type="PackedScene" uid="uid://d07s53qpchp40" path="res://Assets/Prefabs/World/cone.tscn" id="5_vu1er"]
-[ext_resource type="PackedScene" uid="uid://b04w35eygdn4e" path="res://Assets/Prefabs/World/crate.tscn" id="6_hjps7"]
 [ext_resource type="Texture2D" uid="uid://b24wme1o6ibod" path="res://Assets/Materials/purple.png" id="6_jqrvn"]
 [ext_resource type="PackedScene" uid="uid://b77wnb1fhkjmg" path="res://Assets/Models/World/Obstacles/Grind/Grind.glb" id="7_8wxs8"]
 [ext_resource type="PackedScene" uid="uid://cmvl2f74h5thy" path="res://Assets/Prefabs/World/WetFloorSign.tscn" id="10_fujv5"]
 [ext_resource type="PackedScene" uid="uid://vmf24hogjilf" path="res://Assets/Prefabs/World/WaterPuddle.glb" id="11_8wxs8"]
 [ext_resource type="PackedScene" uid="uid://dxfwakip25enn" path="res://Assets/Prefabs/World/CrateStand/crateStand.tscn" id="11_es42d"]
 [ext_resource type="PackedScene" uid="uid://cl7sdrjo52i43" path="res://Assets/Prefabs/World/character.tscn" id="11_vu1er"]
+[ext_resource type="PackedScene" uid="uid://dupux5v6jeaqv" path="res://Assets/Prefabs/World/PickableCrate/PickableCrate.tscn" id="11_xtjyp"]
 [ext_resource type="PackedScene" uid="uid://wxwv7k0r8tso" path="res://Assets/Prefabs/Player/player.tscn" id="13_8wxs8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f2nln"]
@@ -204,9 +204,6 @@ tag = "Grindable"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49937916, 0.24284065, -3.4998124)
 curve = SubResource("Curve3D_vu1er")
 tag = "Grindable"
-
-[node name="Crate" parent="Boxes" unique_id=1407057133 instance=ExtResource("6_hjps7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5289543, 0.022041721, 4.0903482)
 
 [node name="Grind" parent="." unique_id=810523363 instance=ExtResource("7_8wxs8")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.1315153, -0.00035478565, 3.1823034)
@@ -480,3 +477,7 @@ transform = Transform3D(0.22822201, 0, 0, 0, 0.22822201, 0, 0, 0, 0.22822201, 1.
 
 [node name="Player" parent="." unique_id=2030094934 instance=ExtResource("13_8wxs8")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0.720109, 2.807324)
+collision_layer = 1
+
+[node name="PickableCrate" parent="." unique_id=854393103 instance=ExtResource("11_xtjyp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.08613706, 5)

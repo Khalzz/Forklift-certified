@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d3vq3n475g34q"]
+
+[ext_resource type="FontFile" uid="uid://d4n2qxfo0p3yo" path="res://Assets/Fonts/Orbitron/static/Orbitron-Black.ttf" id="1_k5h1w"]
+[ext_resource type="Script" uid="uid://dcylwqsxlwkjo" path="res://Assets/Prefabs/Player/UI/Trick/trick.gd" id="2_bw7so"]
+
+[node name="Trick" type="Label" unique_id=935265409]
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("1_k5h1w")
+theme_override_font_sizes/font_size = 20
+text = "Back-flip x150"
+script = ExtResource("2_bw7so")
